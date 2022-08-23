@@ -3,7 +3,7 @@ import { ThemeContext } from 'styled-components';
 import {createStackNavigator} from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
-import {Signup, Login, Home} from '../screens'; 
+import {Signup, Login, Home, Walkthrough} from '../screens'; 
 
 const Stack = createStackNavigator();
 
@@ -11,9 +11,18 @@ const Stack = createStackNavigator();
 const Auth = ()=> {
   const theme=useContext(ThemeContext);
   return (
-  <Stack.Navigator screenOptions={{
+  <Stack.Navigator 
+  initialRouteName='Walkthrough'
+  screenOptions={{
     cardStyle: {backgroundColor: theme.bgColor}
   }}>
+    <Stack.Screen 
+    name="Walkthrough" 
+    component={Walkthrough}
+    options={{
+      headerShown: false,
+    }}
+    />
     <Stack.Screen 
     name="Login" 
     component={Login}

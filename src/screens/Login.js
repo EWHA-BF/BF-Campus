@@ -17,7 +17,7 @@ const StyledText = styled.Text`
 `;
 
 const Login = ({navigation})=> {
-  const theme=useContext(ThemeContext);
+  // const theme=useContext(ThemeContext);
 
   return (
     <Container>

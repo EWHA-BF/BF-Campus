@@ -27,4 +27,8 @@ export const theme = {
   imgBtnBg: Colors.main,
   imgBtnIcon: Colors.white,
  
+  //Walkthrough
+  wText: Colors.white,
+  wBgColor: Colors.main,
+  wImgBgColor: Colors.white,
 }
