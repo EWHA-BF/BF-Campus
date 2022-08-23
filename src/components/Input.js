@@ -1,30 +1,35 @@
+// Input 안에 icon 넣기
 import React, {useState, forwardRef} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+// Input 컨테이너
 const Container = styled.View`
   flex-direction: column;
   width: 100%;
-  margin: 10px 0;
+  margin-top: 25px;
 `;
 
-const Label = styled.Text`
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: ${ ({theme, isFocused}) => isFocused? theme.text : theme.inputLabel};
-`;
+// // Input 위 텍스트
+// const Label = styled.Text`
+//   font-size: 18px;
+//   font-weight: 600;
+//   margin-bottom: 8px;
+//   color: ${ ({theme}) => theme.inputLabel};
+// `;
 
+
+// Input 입력창
 const StyledInput = styled.TextInput.attrs( ({theme}) => ({
   placeholderTextColor:theme.inputPlaceholder
 }))
 `
   background-color: ${ ({theme}) => theme.inputBgColor};
   color: ${ ({theme}) => theme.text};
-  padding: 20px 10px;
-  font-size: 16px;
-  border: 1px solid ${ ({theme, isFocused}) => isFocused? theme.text : theme.inputBorder};
-  border-radius: 4px;
+  padding: 18px;
+  font-size: 18px;
+  border: 1px solid ${ ({theme, isFocused}) => isFocused? theme.inputBorder : theme.inputNotFocused};
+  border-radius: 30px;
 `;
 
 
@@ -34,7 +39,7 @@ const Input = forwardRef(
 
   return (
     <Container>
-      <Label isFocused={isFocused}>{props.label}</Label>
+      {/* <Label isFocused={isFocused}>{props.label}</Label> */}
       <StyledInput
       ref={ref}
       value={props.value}

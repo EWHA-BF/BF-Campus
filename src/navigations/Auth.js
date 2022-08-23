@@ -3,7 +3,7 @@ import { ThemeContext } from 'styled-components';
 import {createStackNavigator} from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
-import {Signup, Login, Home, Walkthrough} from '../screens'; 
+import {Signup, Login, Home, Walkthrough, Verify, FindPw} from '../screens'; 
 
 const Stack = createStackNavigator();
 
@@ -49,6 +49,12 @@ const Auth = ()=> {
         );
       }
     }}/>
+    <Stack.Screen 
+    name="Verify" 
+    component={Verify}/>
+    <Stack.Screen 
+    name="FindPw" 
+    component={FindPw}/>
     <Stack.Screen 
     name="Home" 
     component={Home}

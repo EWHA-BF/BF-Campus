@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Container = styled.View`
-  
 `;
 
-const WalkthroughImg= styled.Image`
+const BasicImg= styled.Image`
   background-color: ${ ({theme}) => theme.imgBgColor};
   width: 100px;
   height: 100px;
+  margin-bottom: 30px;
 `;
 
 
 const Image = ({url})=> {
   return (
     <Container>
-      <WalkthroughImg source={{uri: url}}/>
+      <BasicImg source={{uri: url}}/>
     </Container>
   );
 };
