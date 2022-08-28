@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const Container = styled.View`
   flex-direction: column;
   width: 100%;
-  margin-top: 25px;
+  margin: 10px 0;
 `;
 
 // // Input 위 텍스트
@@ -26,7 +26,7 @@ const StyledInput = styled.TextInput.attrs( ({theme}) => ({
 `
   background-color: ${ ({theme}) => theme.inputBgColor};
   color: ${ ({theme}) => theme.text};
-  padding: 18px;
+  padding: 15px;
   font-size: 18px;
   border: 1px solid ${ ({theme, isFocused}) => isFocused? theme.inputBorder : theme.inputNotFocused};
   border-radius: 30px;

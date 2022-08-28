@@ -34,6 +34,7 @@ const Auth = ()=> {
     name="Signup" 
     component={Signup}
     options={{
+      headerTitle: '회원가입',
       headerTitleAlign: 'center',
       headerBackTitleVisible: false,
       // theme 사용
@@ -51,13 +52,50 @@ const Auth = ()=> {
     }}/>
     <Stack.Screen 
     name="Verify" 
-    component={Verify}/>
+    component={Verify}
+    options={{
+      headerTitle: '이메일 인증',
+      headerTitleAlign: 'center',
+      headerBackTitleVisible: false,
+      // theme 사용
+      headerTintColor: theme.text,
+      headerLeft: ({onPress, tintColor}) => {
+        return (
+          <Ionicons 
+          name="chevron-back-outline" 
+          size={30}
+          style={{marginLeft:5,}}
+          color={tintColor}
+          onPress={onPress}/> 
+        );
+      }
+    }}/>
     <Stack.Screen 
     name="FindPw" 
-    component={FindPw}/>
+    component={FindPw}
+    options={{
+      headerTitle: '비밀번호 재설정',
+      headerTitleAlign: 'center',
+      headerBackTitleVisible: false,
+      // theme 사용
+      headerTintColor: theme.text,
+      headerLeft: ({onPress, tintColor}) => {
+        return (
+          <Ionicons 
+          name="chevron-back-outline" 
+          size={30}
+          style={{marginLeft:5,}}
+          color={tintColor}
+          onPress={onPress}/> 
+        );
+      }
+    }}/>
     <Stack.Screen 
     name="Home" 
     component={Home}
+    options={{
+      headerShown: false,
+    }}
     />
   </Stack.Navigator>
   );

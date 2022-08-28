@@ -21,8 +21,8 @@ export const theme = {
 
   //Input
   inputBgColor: Colors.white,
-  // inputLabel: Colors.main,
-  inputPlaceholder: Colors.main,
+  inputLabel: Colors.main,
+  inputPlaceholder: Colors.grey,
   inputBorder: Colors.main, 
   inputNotFocused: Colors.grey,
 
@@ -35,4 +35,8 @@ export const theme = {
   wText: Colors.white,
   wBgColor: Colors.main,
   wImgBgColor: Colors.white,
+
+  //Verify
+  bigText: Colors.red,
+  smallText: Colors.main,
 }

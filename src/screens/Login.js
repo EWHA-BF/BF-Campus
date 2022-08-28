@@ -119,7 +119,7 @@ const Login = ({navigation})=> {
       onPress={_handleSigninBtnPress}
       disabled={disabled}
       containerStyle={{
-        padding: 18,
+        padding: 15,
         marginTop: 0,
         marginBottom: 25,
         borderRadius: 30,
