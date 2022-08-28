@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import { ThemeContext } from 'styled-components';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Home} from '../screens'; 
-
+// import {Home} from '../screens'; 
+import DrawerNav from './DrawerNav'; 
 
 const Stack = createStackNavigator();
 
@@ -18,8 +18,11 @@ const Main = ()=> {
     cardStyle: {backgroundColor: theme.bgColor}
   }}>
     <Stack.Screen 
-    name="Home" 
-    component={Home}/>
+    name='Main' 
+    component={DrawerNav}
+    options={{
+      headerShown: false,
+    }}/>
   </Stack.Navigator>
   );
 } 

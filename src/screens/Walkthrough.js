@@ -39,6 +39,7 @@ const Walkthrough = ({navigation}) => {
 
   const onSkip = () => {
     // setShowRealApp(true);
+    // 임시로 잠깐 바꿈
     navigation.reset( { routes:[ {name: 'Login'} ] } );
   };
 

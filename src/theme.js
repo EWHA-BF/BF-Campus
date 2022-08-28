@@ -39,4 +39,9 @@ export const theme = {
   //Verify
   bigText: Colors.red,
   smallText: Colors.main,
+
+  //SideMenuBar
+  activeMenuBg: Colors.main,
+  activeMenuText: Colors.white,
+  menuText: Colors.main,
 }
