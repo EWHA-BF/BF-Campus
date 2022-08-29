@@ -8,6 +8,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {validateEmail, removeWhitespace} from '../util';
 
+import {auth} from '../firebase';
+import {
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from 'firebase/auth';
+
 
 //logo img url
 const LOGO='https://firebasestorage.googleapis.com/v0/b/rn-chat-app-89bdb.appspot.com/o/ios-icon.png?alt=media';
@@ -27,6 +33,15 @@ const StyledText = styled.Text`
   color: ${ ({theme}) => theme.text};
 `;
 
+
+
+//현재 로그인한 사용자 정보 가져오기
+export const getCurUser = () => {
+  const {uid, email, displayName} = auth.currentUser;
+  return {uid, email, displayName};
+};
+
+
 const Login = ({navigation})=> {
   const insets = useSafeAreaInsets();
   const theme=useContext(ThemeContext);
@@ -36,6 +51,19 @@ const Login = ({navigation})=> {
   const [pw, setPw] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const [user, setUser] =  useState({});
+
+  //수정하기!
+  //로그인 상태 변경 감지
+  onAuthStateChanged(auth, (currentUser)=> {
+    //user=auth.currentUser;
+    if (currentUser) {
+      setUser(currentUser);
+    } else {
+      // User is signed out
+    }
+  })
+
 
 
   //로그인 버튼 활성화 설정
@@ -61,18 +89,31 @@ const Login = ({navigation})=> {
     setErrorMsg(pw ? '' : '비밀번호를 입력해주세요');
   }
 
-
   //로그인 버튼 함수
   const _handleSigninBtnPress = async () => {
+    
+    // 로그인 성공
     try{
+
       // spinner.start();
 
-      // const user= await signin({email, pw});
-      // setUser(user);
-      navigation.navigate('Home');
+      const userInfo = await signInWithEmailAndPassword(auth, email, pw);
+      //setUser(userInfo.user);
+      setEmail('');
+      setPw('');
+
+      // 인증 여부에 따라 화면 이동 다르게
+      if(user.emailVerified)  {
+        navigation.navigate('Home');
+      }
+      else {
+        navigation.navigate('Verify');
+      }
     }
-    catch(e) {
-      Alert.alert('Login Error',e.message);
+    // 로그인 실패
+    catch(err){
+      console.log(err.message);
+      console.log("로그인 실패"); 
     }
     finally{
       // spinner.stop();
@@ -166,5 +207,7 @@ const Login = ({navigation})=> {
     </KeyboardAwareScrollView>
   );
 } 
+
+
 
 export default Login;

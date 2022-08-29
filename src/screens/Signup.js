@@ -5,6 +5,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Alert} from 'react-native';
 import {validateEmail, removeWhitespace} from '../util';
 
+import {auth} from '../firebase';
+import {
+  createUserWithEmailAndPassword,
+  updateProfile
+} from 'firebase/auth';
+
+
 const Container = styled.View`
   flex : 1;
   align-items: center;
@@ -48,6 +55,7 @@ const Signup = ({navigation})=>{
   const [nickname, setNickName] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const [user, setUser] =  useState({});
 
   //버튼 활성화 여부 설정
   useEffect(() => {
@@ -72,15 +80,29 @@ const Signup = ({navigation})=>{
   }, [nickname, email, pw, pwCheck]);
 
 
+
+
+
   //회원가입하는 함수
   const _handleSignupBtnPress = async () => {
+    
+    //회원가입 성공
     try{
       // spinner.start();
+  
+      const newUser = await createUserWithEmailAndPassword(auth, email, pw);
+      setUser(newUser.user);
       
-      // const user = await signup({name, email, pw, photo});
-      // setUser(user);
+      //nickname 저장
+      await updateProfile(user, {displayName: nickname});
 
-      //alert 창
+      setEmail('');
+      setPw('');
+      setNickName('');
+
+      // 오류 해결하기!!
+
+      //alert
       Alert.alert(
         "아직 인증되지 않은 사용자입니다",
         "이메일 인증 화면으로 이동하시겠습니까?",
@@ -94,8 +116,17 @@ const Signup = ({navigation})=>{
         ],
       );
     }
-    catch(e) {
-      Alert.alert('Signup Error', e.message);
+    // 회원가입 실패
+    catch(err){
+      switch (err.code) {
+        case 'auth/email-already-in-use':
+          Alert.alert('이미 가입한 계정입니다');
+          break;
+        // nickname 중복 확인 코드 넣기!!
+        default:
+          console.log(err.message);
+          console.log("회원가입 실패");
+      }
     }
     finally{
       // spinner.stop();

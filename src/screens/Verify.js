@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Button} from '../components';
+import {Alert} from 'react-native';
+
+import { sendEmailVerification } from "firebase/auth";
+import {auth} from '../firebase';
 
 const Container = styled.View`
   flex : 1;
@@ -26,7 +30,29 @@ const SmallText = styled.Text`
   text-align: start;
 `;
 
+// async await 추가!!
 const Verify = ({navigation})=> {
+  //인증 메일 전송 
+  const sendEmail = () => {
+    sendEmailVerification(auth.currentUser);
+    Alert.alert('이메일을 전송하였습니다. 메일함을 확인해주세요.');
+  };
+
+  //인증 여부 확인
+  const isVerify = () => {
+    auth.currentUser.reload();
+    if(auth.currentUser.emailVerified) {
+      Alert.alert('인증 완료되었습니다');
+      navigation.navigate('Home');
+    }
+    else{
+      Alert.alert('인증을 완료해주세요.');
+    }
+  }
+
+
+
+
   return (
     <Container>
       <BigText>인증되지 않은 사용자입니다</BigText>
@@ -35,7 +61,7 @@ const Verify = ({navigation})=> {
       <SmallText>1. 아래 버튼을 눌러 이화인 이메일로 인증 메일 전송</SmallText>
       <Button 
       title="인증 메일 전송" 
-      onPress={()=>{}}
+      onPress={sendEmail}
       containerStyle={{
         padding: 15,
         marginTop: 0,
@@ -51,7 +77,7 @@ const Verify = ({navigation})=> {
       <SmallText>3. 아래 버튼을 눌러 인증 완료</SmallText>
       <Button 
       title="인증 완료" 
-      onPress={()=>navigation.navigate('Home')}
+      onPress={isVerify}
       containerStyle={{
         padding: 15,
         marginTop: 0,
