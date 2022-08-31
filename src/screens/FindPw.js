@@ -1,7 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import {Button, Input} from '../components';
+import {Button, Input, ErrorMsg} from '../components';
 import { Alert } from 'react-native';
+import {validateEmail, removeWhitespace} from '../util';
+
+import { sendPasswordResetEmail } from "firebase/auth";
+import {auth} from '../firebase';
 
 const Container = styled.View`
   flex : 1;
@@ -22,41 +26,90 @@ const StyledText = styled.Text`
 const FindPw = ({navigation})=> {
   const [email, setEmail] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const [errorMsg, setErrorMsg] = useState('');
+
   //버튼 활성화
   useEffect(() => {
-    setDisabled(!(email));
-  }, [email]);
+    setDisabled(!(email && !errorMsg));
+  }, [email, errorMsg]);
 
   
   const theme=useContext(ThemeContext);
 
+
+  //이메일 입력 
+  const _handleEmailChange = email => {
+    //공백 제거
+    const changedEmail=removeWhitespace(email);
+    //업데이트
+    setEmail(changedEmail);
+    //유효성 검사 후 에러 메시지 변경
+    setErrorMsg(validateEmail(changedEmail) ? '' : '올바른 이메일을 입력해주세요');
+  }
+
+
+  //메일 전송 버튼 함수
+  const sendEmail = () => {
+    
+    // 전송 성공
+    try{
+      // spinner.start();
+      sendPasswordResetEmail(auth, email);
+
+      Alert.alert(
+        "인증 메일 전송 완료!",
+        "메일함을 확인하여 비밀번호를 재설정하세요",
+        [
+          {
+            text: "취소",
+            onPress: () => {},
+            style: "cancel"
+          },
+          { text: "확인", onPress: () => navigation.navigate('Login') }
+        ],
+      );
+
+      setEmail('');
+    }
+
+    // 메일 전송 실패
+    catch(err){
+      console.log(err.message);
+      switch(err.code) {
+        case 'auth/invalid-email':
+          Alert.alert('올바른 이메일을 입력해주세요');
+          break;
+          // 에러 안 잡힘 (메일 전송은x) --> 수정하기!!
+        case 'auth/user-not-found':
+          Alert.alert('존재하지 않는 계정입니다');
+          break;
+        default:
+          Alert.alert("메일 전송 실패"); 
+      }
+    }
+    finally{
+      // spinner.stop();
+    }
+  }
+
   return (
     <Container>
       <StyledText>비밀번호를 재설정할 이메일을 입력해주세요</StyledText>
+
       <Input
-      //label='비밀번호를 재설정할 이메일을 입력해주세요'
       placeholder='이메일'
       returnKeyType='done'
       value={email}
-      onChangeText={(email)=> {setEmail(email)}} 
+      onChangeText={_handleEmailChange} 
       onSubmitEditing={()=>{}}
       />
+
+      {/* 에러 메시지 */}
+      <ErrorMsg msg={errorMsg}/>
+
       <Button 
       title="인증 메일 전송" 
-      onPress={()=>{
-        Alert.alert(
-          "인증 메일 전송 완료!",
-          "메일함을 확인하여 비밀번호를 재설정하세요",
-          [
-            {
-              text: "취소",
-              onPress: () => {},
-              style: "cancel"
-            },
-            { text: "확인", onPress: () => navigation.navigate('Login') }
-          ],
-        );
-      }}
+      onPress={sendEmail}
       disabled={disabled}
       containerStyle={{
         padding: 15,
