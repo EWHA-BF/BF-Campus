@@ -129,6 +129,7 @@ const Login = ({navigation})=> {
       {/* 로고 이미지 */}
       <Image url={LOGO}/>
 
+      {/* Input에 icon 넣기!!! */}
       {/* 이메일 Input */}
       <Input
       // label='이메일을 입력해주세요'
@@ -166,7 +167,7 @@ const Login = ({navigation})=> {
         borderRadius: 30,
       }}
       textStyle={{
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: '600',
       }}
       />
@@ -179,7 +180,6 @@ const Login = ({navigation})=> {
         marginTop: 5,
         marginBottom: 50,
         backgroundColor: 'transparent', 
-        
       }}
       textStyle={{
         color: theme.btnTextLink,

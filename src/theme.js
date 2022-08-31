@@ -5,6 +5,7 @@ const Colors = {
   dark_grey: '#757575',
   main: '#00462a',
   red: '#e84118',
+  light_grey: '##E0E0E0',
 }
 
 
@@ -12,6 +13,7 @@ export const theme = {
   bgColor: Colors.white,
   text: Colors.black,
   errorText: Colors.red,
+  ewha_green: Colors.main,
   
   //Button
   btnBgColor: Colors.main,
@@ -44,4 +46,5 @@ export const theme = {
   activeMenuBg: Colors.main,
   activeMenuText: Colors.white,
   menuText: Colors.main,
+
 }

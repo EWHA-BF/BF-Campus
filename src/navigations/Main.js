@@ -12,9 +12,6 @@ const Main = ()=> {
   const theme=useContext(ThemeContext);
   return (
   <Stack.Navigator screenOptions={{
-    headerTitleAlign: 'center',
-    headerTintColor: theme.text,
-    headerBackTitleVisible: false,
     cardStyle: {backgroundColor: theme.bgColor}
   }}>
     <Stack.Screen 

@@ -30,11 +30,10 @@ const RowContainer = styled.View`
 `;
 
 const StyledText = styled.Text`
-  font-size: 18px;
-  color: ${ ({theme}) => theme.inputLabel};
+  font-size: 17px;
+  color: ${ ({theme}) => theme.text};
   width:100px;
   margin-right: 10px;
-  font-weight: 500;
 `;
 
 const Signup = ({navigation})=>{
@@ -217,7 +216,7 @@ const Signup = ({navigation})=>{
         borderRadius: 30,
       }}
       textStyle={{
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: '600',
       }}
       />

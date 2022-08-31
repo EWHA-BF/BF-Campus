@@ -1,8 +1,7 @@
 import React, {useContext} from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import {Login, Home} from '../screens'; 
+import {MainBoard, Home} from '../screens'; 
 import styled, { ThemeContext } from 'styled-components';
-
 
 const Drawer = createDrawerNavigator();
 
@@ -13,7 +12,24 @@ export default function DrawerNav() {
     <Drawer.Navigator 
     initialRouteName='Home'
     backBehavior='order'
+    
     screenOptions={{
+      //배경색 지정
+      cardStyle: {
+        backgroundColor: theme.bgColor
+      },
+      
+      //header 설정
+      headerShadowVisible: false,
+      headerTitleStyle: {
+        fontSize: 20,
+        color: theme.text,
+      },
+      headerTintColor: theme.ewha_green,
+      headerTitleAlign: 'left',
+      headerBackTitleVisible: false,
+
+      //메뉴 설정
       drawerActiveTintColor: theme.activeMenuText,
       drawerActiveBackgroundColor :theme.activeMenuBg,  
       drawerInactiveTintColor: theme.menuText,
@@ -26,10 +42,11 @@ export default function DrawerNav() {
         title: '앱 이름',
       }}/>
       <Drawer.Screen 
-      name='Login' 
-      component={Login} 
+      name='MainBoard' 
+      component={MainBoard} 
       options={{
-        drawerLabel: '로그인'
+        drawerLabel: '게시판',
+        title: '게시판'
       }}/>
     </Drawer.Navigator>
   );

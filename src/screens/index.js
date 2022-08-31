@@ -4,5 +4,6 @@ import Signup from './Signup';
 import Walkthrough from './Walkthrough';
 import Verify from './Verify';
 import FindPw from './FindPw';
+import MainBoard from './MainBoard';
 
-export {Login, Home, Signup, Walkthrough, Verify, FindPw};
+export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard};

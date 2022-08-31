@@ -63,7 +63,7 @@ const Verify = ({navigation})=> {
       title="인증 메일 전송" 
       onPress={sendEmail}
       containerStyle={{
-        padding: 15,
+        padding: 12,
         marginTop: 0,
         marginBottom: 25,
         borderRadius: 30,
@@ -79,7 +79,7 @@ const Verify = ({navigation})=> {
       title="인증 완료" 
       onPress={isVerify}
       containerStyle={{
-        padding: 15,
+        padding: 12,
         marginTop: 0,
         marginBottom: 25,
         borderRadius: 30,

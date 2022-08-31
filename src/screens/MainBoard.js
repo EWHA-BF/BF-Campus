@@ -13,12 +13,12 @@ const StyledText = styled.Text`
   color: ${ ({theme}) => theme.text};
 `;
 
-const Home = ({navigation})=> {
+const MainBoard = ({navigation})=> {
   return (
     <Container>
-      <StyledText>Home</StyledText>
+      <StyledText>MainBoard</StyledText>
     </Container>
   );
 } 
 
-export default Home;
+export default MainBoard;

@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
 import {Signup, Login, Home, Walkthrough, Verify, FindPw} from '../screens'; 
+import DrawerNav from './DrawerNav'; 
 
 const Stack = createStackNavigator();
 
@@ -14,7 +15,29 @@ const Auth = ()=> {
   <Stack.Navigator 
   initialRouteName='Walkthrough'
   screenOptions={{
-    cardStyle: {backgroundColor: theme.bgColor}
+    //배경색 지정
+    cardStyle: {
+      backgroundColor: theme.bgColor
+    },
+    //header 설정
+    headerStyle: {
+    },
+    headerTitleStyle: {
+      fontSize: 18,
+    },
+    headerTintColor: theme.text,
+    headerTitleAlign: 'center',
+      headerBackTitleVisible: false,
+      headerLeft: ({onPress, tintColor}) => {
+        return (
+          <Ionicons 
+          name="chevron-back-outline" 
+          size={30}
+          style={{marginLeft:5,}}
+          color={tintColor}
+          onPress={onPress}/> 
+        );
+      }
   }}>
     <Stack.Screen 
     name="Walkthrough" 
@@ -35,64 +58,22 @@ const Auth = ()=> {
     component={Signup}
     options={{
       headerTitle: '회원가입',
-      headerTitleAlign: 'center',
-      headerBackTitleVisible: false,
-      // theme 사용
-      headerTintColor: theme.text,
-      headerLeft: ({onPress, tintColor}) => {
-        return (
-          <Ionicons 
-          name="chevron-back-outline" 
-          size={30}
-          style={{marginLeft:5,}}
-          color={tintColor}
-          onPress={onPress}/> 
-        );
-      }
     }}/>
     <Stack.Screen 
     name="Verify" 
     component={Verify}
     options={{
       headerTitle: '이메일 인증',
-      headerTitleAlign: 'center',
-      headerBackTitleVisible: false,
-      // theme 사용
-      headerTintColor: theme.text,
-      headerLeft: ({onPress, tintColor}) => {
-        return (
-          <Ionicons 
-          name="chevron-back-outline" 
-          size={30}
-          style={{marginLeft:5,}}
-          color={tintColor}
-          onPress={onPress}/> 
-        );
-      }
     }}/>
     <Stack.Screen 
     name="FindPw" 
     component={FindPw}
     options={{
       headerTitle: '비밀번호 재설정',
-      headerTitleAlign: 'center',
-      headerBackTitleVisible: false,
-      // theme 사용
-      headerTintColor: theme.text,
-      headerLeft: ({onPress, tintColor}) => {
-        return (
-          <Ionicons 
-          name="chevron-back-outline" 
-          size={30}
-          style={{marginLeft:5,}}
-          color={tintColor}
-          onPress={onPress}/> 
-        );
-      }
     }}/>
     <Stack.Screen 
     name="Home" 
-    component={Home}
+    component={DrawerNav}
     options={{
       headerShown: false,
     }}
