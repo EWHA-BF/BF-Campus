@@ -7,16 +7,15 @@ const Container = styled.View`
 
 const BasicImg= styled.Image`
   background-color: ${ ({theme}) => theme.imgBgColor};
-  width: 100px;
-  height: 100px;
-  margin-bottom: 30px;
 `;
 
 
-const Image = ({url})=> {
+const Image = ({url, containerStyle})=> {
   return (
     <Container>
-      <BasicImg source={{uri: url}}/>
+      <BasicImg 
+      source={{uri: url}}
+      style={containerStyle}/>
     </Container>
   );
 };
@@ -24,6 +23,7 @@ const Image = ({url})=> {
 
 Image.propTypes={
   url: PropTypes.string,
+  containerStyle: PropTypes.object,
 }
 
 export default Image;

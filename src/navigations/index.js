@@ -1,11 +1,11 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import Auth from './Auth';
 import Main from './Main';
 
 // import SideMenu from './SideMenu';
 
-const Navigation = ()=> {
+const Navigation = () => {
   return (
     //Navigation Container
     <NavigationContainer>
@@ -14,11 +14,11 @@ const Navigation = ()=> {
       {/* {user.uid ? <Main/> : <Auth />} */}
 
 
-      <Auth />
-       
+      <Main />
+
 
       {/* 진행중 여부에 따라 spinner 렌더링 추가 */}
-    </NavigationContainer>  
+    </NavigationContainer>
   );
 }
 

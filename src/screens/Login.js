@@ -127,7 +127,13 @@ const Login = ({navigation})=> {
     <Container insets={insets}>
 
       {/* 로고 이미지 */}
-      <Image url={LOGO}/>
+      <Image 
+      url={LOGO}
+      containerStyle={{
+        width: 100,
+        height: 100,
+        marginBottom: 30,
+      }}/>
 
       {/* Input에 icon 넣기!!! */}
       {/* 이메일 Input */}

@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 // import {Home} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
+import {Map} from '../screens';
 
 const Stack = createStackNavigator();
 
@@ -12,14 +13,17 @@ const Main = ()=> {
   const theme=useContext(ThemeContext);
   return (
   <Stack.Navigator screenOptions={{
-    cardStyle: {backgroundColor: theme.bgColor}
+    cardStyle: {backgroundColor: theme.bgColor},
+    headerShown: false,
   }}>
     <Stack.Screen 
     name='Main' 
     component={DrawerNav}
-    options={{
-      headerShown: false,
-    }}/>
+    />
+    <Stack.Screen 
+    name='Map' 
+    component={Map}
+    />
   </Stack.Navigator>
   );
 } 
