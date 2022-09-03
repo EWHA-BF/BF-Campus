@@ -6,5 +6,6 @@ import Verify from './Verify';
 import FindPw from './FindPw';
 import MainBoard from './MainBoard';
 import Map from './Map';
+import BoardList from './BoardList';
 
-export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map};
+export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardList};
