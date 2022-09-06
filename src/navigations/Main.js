@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 // import {Home} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
-import {Map} from '../screens';
+import {Map, BoardList, EmergencyBoard} from '../screens';
 
 
 const Stack = createStackNavigator();
@@ -27,10 +27,14 @@ const Main = ()=> {
     name='Map' 
     component={Map}
     />
-    {/* <Stack.Screen 
-    name='EditBoardGrid' 
-    component={EditBoardGrid}
-    />  */}
+    <Stack.Screen 
+    name='EmergencyBoard' 
+    component={EmergencyBoard}
+    />  
+    <Stack.Screen 
+    name='BoardList' 
+    component={BoardList}
+    />  
   </Stack.Navigator>
   );
 } 

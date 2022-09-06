@@ -7,7 +7,10 @@ import FindPw from './FindPw';
 import MainBoard from './MainBoard';
 import Map from './Map';
 import BoardList from './BoardList';
-import EditBoardGrid from './EditBoardGrid'
+import EmergencyBoard from './EmergencyBoard';
+import Profile from './Profile';
+import Settings from './Settings';
 
 
-export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardList, EditBoardGrid};
+
+export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardList, EmergencyBoard, Profile, Settings};

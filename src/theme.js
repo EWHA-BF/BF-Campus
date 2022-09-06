@@ -6,6 +6,7 @@ const Colors = {
   main: '#00462a',
   red: '#e84118',
   light_grey: '#E0E0E0',
+  light_green: '##3CD3B5',
 }
 
 
@@ -14,7 +15,9 @@ export const theme = {
   text: Colors.black,
   errorText: Colors.red,
   ewha_green: Colors.main,
-  border: Colors.light_grey,
+  light_grey: Colors.light_grey,
+  dark_grey: Colors.dark_grey,
+  bg_green: Colors.light_green,
   
   //Button
   btnBgColor: Colors.main,
@@ -44,8 +47,8 @@ export const theme = {
   smallText: Colors.main,
 
   //SideMenuBar
-  activeMenuBg: Colors.main,
-  activeMenuText: Colors.white,
-  menuText: Colors.main,
+  activeMenuBg: Colors.bg_green,
+  activeMenuText: Colors.main,
+  menuText: Colors.black,
 
 }
