@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
-import {Button, Image} from '../components';
-import {TouchableOpacity, View} from 'react-native';
+import {Button, Image, BoardGrid} from '../components';
+import {TouchableOpacity, View, Dimensions} from 'react-native';
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   flex : 1;
   background-color: ${ ({theme}) => theme.bgColor};
   align-items: center;
@@ -13,7 +13,7 @@ const Container = styled.View`
 //row container
 const Row=styled.View`
   flex-direction: row;
-  width: 80%;
+  width: 95%;
   height: 30%;
   align-items: center;
   justify-content: space-evenly;
@@ -25,9 +25,9 @@ const StyledText = styled.Text`
 `;
 
 const Home = ({navigation})=> {
+
   return (
     <Container>
-     
      {/* Map */}
      <TouchableOpacity
      onPress={()=>navigation.navigate('Map')}
@@ -36,34 +36,32 @@ const Home = ({navigation})=> {
       <Image 
       url='https://firebasestorage.googleapis.com/v0/b/rn-chat-app-89bdb.appspot.com/o/ios-icon.png?alt=media' 
       containerStyle={{
-        // 화면 크기에 따라 바뀌도록 사이즈 조절 (windowdimension 이용)
-        width: 300,
-        height: 200,
+        width: (Dimensions.get('window').width) - 20*3,
+        height: 220,
+        marginTop:30,
         resizeMode: 'stretch',
       }}/>
     </TouchableOpacity>
 
 
-    {/*긴급 게시판*/}  
-    <View
-    backgroundColor='black'
-    style={{
-      width: 300,
-      height: 150,
-    }}
-    ><StyledText style={{color: 'white'}}>게시판</StyledText>
-    </View>
+    {/* 나의 게시판
+    <BoardGrid/>  */}
 
-    {/*나의 게시판*/}
-    {/* row container*/}
-    <View
-    backgroundColor='black'
-    style={{
-      width: 300,
-      height: 150,
-    }}
-    ><StyledText style={{color: 'white'}}>나의 게시판</StyledText>
-    </View>
+
+    {/*긴급 게시판*/}  
+   
+      <View
+        backgroundColor='black'
+        style={{
+          width: (Dimensions.get('window').width) - 20*3,
+          height: 100,
+          marginBottom:40,
+          marginTop: 20,
+        }}
+      >
+        <StyledText style={{color: 'white'}}>긴급 게시판</StyledText>
+      </View>
+    
     </Container>
   );
 } 

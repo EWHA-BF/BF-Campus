@@ -4,7 +4,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 // import {Home} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
-import {Map, EditBoardList} from '../screens';
+import {Map} from '../screens';
+
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,7 @@ const Main = ()=> {
   const theme=useContext(ThemeContext);
   return (
   <Stack.Navigator
-  // initialRouteName= 'EditBoardList'
+  initialRouteName= 'Main'
   screenOptions={{
     cardStyle: {backgroundColor: theme.bgColor},
     headerShown: false,
@@ -27,9 +28,9 @@ const Main = ()=> {
     component={Map}
     />
     {/* <Stack.Screen 
-    name='EditBoardList' 
-    component={EditBoardList}
-    /> */}
+    name='EditBoardGrid' 
+    component={EditBoardGrid}
+    />  */}
   </Stack.Navigator>
   );
 } 

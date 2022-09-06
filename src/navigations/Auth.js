@@ -3,7 +3,7 @@ import { ThemeContext } from 'styled-components';
 import {createStackNavigator} from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
-import {Signup, Login, Home, Walkthrough, Verify, FindPw} from '../screens'; 
+import {Signup, Login, Home, Walkthrough, Verify, FindPw, EditBoardGrid} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
 
 const Stack = createStackNavigator();
@@ -74,6 +74,13 @@ const Auth = ()=> {
     <Stack.Screen 
     name="Home" 
     component={DrawerNav}
+    options={{
+      headerShown: false,
+    }}
+    />
+    <Stack.Screen 
+    name="EditBoardGrid" 
+    component={EditBoardGrid}
     options={{
       headerShown: false,
     }}

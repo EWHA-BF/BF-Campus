@@ -104,7 +104,7 @@ const Login = ({navigation})=> {
 
       // 인증 여부에 따라 화면 이동 다르게
       if(user.emailVerified)  {
-        navigation.navigate('Home');
+        navigation.navigate('EditBoardGrid');
       }
       else {
         navigation.navigate('Verify');
