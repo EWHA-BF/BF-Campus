@@ -3,6 +3,7 @@ import {Dimensions} from 'react-native'
 import {AutoDragSortableView} from '../components';
 import styled, {ThemeContext} from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -161,6 +162,12 @@ export default class BoardList extends Component {
         // isFixed 여부에 따라 렌더링 다르게 (생략함)
         
         return (
+            <TouchableOpacity 
+            // 게시판으로 화면 이동
+            onPress={()=>this.props.navigation.navigate('EngBoard')}
+            onLongPress={() => {}}
+            delayLongPress={1000}
+            >
             <Item>
                 {/* 정렬 아이콘 */}
                 <ItemIconSwipe>
@@ -209,6 +216,7 @@ export default class BoardList extends Component {
                     }/>}
                 </ItemIconSwipe>
             </Item>
+            </TouchableOpacity>
         )
     }
 }

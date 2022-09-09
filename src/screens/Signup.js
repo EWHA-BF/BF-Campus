@@ -1,9 +1,10 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import styled from 'styled-components';
 import {Button, Input, ErrorMsg} from '../components';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Alert} from 'react-native';
 import {validateEmail, removeWhitespace} from '../util';
+import {UserContext, ProgressContext} from '../contexts';
 
 import {auth} from '../firebase';
 import {
@@ -12,6 +13,7 @@ import {
 } from 'firebase/auth';
 
 
+//styled components
 const Container = styled.View`
   flex : 1;
   align-items: center;
@@ -36,6 +38,7 @@ const StyledText = styled.Text`
   margin-right: 10px;
 `;
 
+
 const Signup = ({navigation})=>{
   
   const refPw=useRef(null);
@@ -43,8 +46,10 @@ const Signup = ({navigation})=>{
   const refNickname=useRef(null);
   const refDidMount = useRef(null);
   
-  // const {setUser} = useContext(UserContext);
-  // const {spinner} = useContext(ProgressContext);
+
+  // user 정보 업데이트 위해 불러옴
+  const {setUser} = useContext(UserContext);
+  const {spinner} = useContext(ProgressContext);
 
 
   //상태 변수
@@ -54,12 +59,13 @@ const Signup = ({navigation})=>{
   const [nickname, setNickName] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const [user, setUser] =  useState({});
+
 
   //버튼 활성화 여부 설정
   useEffect(() => {
     setDisabled(!(nickname && email && pw && pwCheck && !errorMsg));
   }, [nickname, email, pw, pwCheck, errorMsg]);
+
 
   //에러 메시지 변경
   useEffect(() => {
@@ -80,55 +86,59 @@ const Signup = ({navigation})=>{
 
 
 
-
-
   //회원가입하는 함수
   const _handleSignupBtnPress = async () => {
     
     //회원가입 성공
     try{
-      // spinner.start();
+      //spinner 실행
+      spinner.start();
   
+      //Signup
       const newUser = await createUserWithEmailAndPassword(auth, email, pw);
-      setUser(newUser.user);
       
       //nickname 저장
-      await updateProfile(user, {displayName: nickname});
+      // 닉네임 저장 안 되는 문제 해결 시도 - 변경한 코드. 여기 실행해봐야 앎
+      await updateProfile(newUser, {displayName: nickname});
+      console.log(newUser.user);
+      
+      //user 업데이트
+      setUser(newUser.user);
 
       setEmail('');
       setPw('');
       setNickName('');
 
-      // 오류 해결하기!!
-
-      //alert
-      Alert.alert(
-        "아직 인증되지 않은 사용자입니다",
-        "이메일 인증 화면으로 이동하시겠습니까?",
-        [
-          {
-            text: "나중에",
-            onPress: () => navigation.navigate('Login'),
-            style: "cancel"
-          },
-          { text: "이동", onPress: () => navigation.navigate('Verify') }
-        ],
-      );
+      
+      //이메일 인증
+      // Alert.alert(
+      //   "아직 인증되지 않은 사용자입니다",
+      //   "이메일 인증 화면으로 이동하시겠습니까?",
+      //   [
+      //     {
+      //       text: "나중에",
+      //       onPress: () => navigation.navigate('Login'),
+      //       style: "cancel"
+      //     },
+      //     { text: "이동", onPress: () => navigation.navigate('Verify') }
+      //   ],
+      // );
     }
+
     // 회원가입 실패
     catch(err){
       switch (err.code) {
         case 'auth/email-already-in-use':
           Alert.alert('이미 가입한 계정입니다');
           break;
-        // nickname 중복 확인 코드 넣기!!
         default:
           console.log(err.message);
-          console.log("회원가입 실패");
+          Alert.alert("회원가입 실패");
       }
     }
     finally{
-      // spinner.stop();
+      //spinner 중지
+      spinner.stop();
     }
   }
 

@@ -4,6 +4,7 @@ import {Image} from '../components';
 import {TouchableOpacity, View, Dimensions} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+
 const Container = styled.SafeAreaView`
   flex : 1;
   background-color: ${ ({theme}) => theme.bgColor};
@@ -44,6 +45,7 @@ const CompoHeader = styled.View`
   align-items: center;
 `;
 
+
 const Home = ({navigation})=> {
   const theme=useContext(ThemeContext);
 
@@ -67,7 +69,7 @@ const Home = ({navigation})=> {
 
     {/*긴급 게시판*/}  
     <TouchableOpacity
-     onPress={()=>navigation.navigate('EmergencyBoard')}
+     onPress={()=> navigation.navigate('EmergencyBoard') }
      activeOpacity={0.8}>
       <StyledCompo>
         <CompoHeader>

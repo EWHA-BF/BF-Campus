@@ -58,6 +58,7 @@ const Input = forwardRef(
           isFocused={isFocused}
           onFocus={() => setIsFocused(true)}
           secureTextEntry={props.isPassword}
+          editable={!props.disabled}
         />
       </Container>
     );
@@ -77,6 +78,7 @@ Input.propTypes = {
   returnKeyType: PropTypes.oneOf(['done', 'next']),
   maxLength: PropTypes.number,
   isPassword: PropTypes.bool,
+  disabled: PropTypes.bool,
 }
 
 export default Input;

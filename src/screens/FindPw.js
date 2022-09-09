@@ -3,7 +3,6 @@ import styled, { ThemeContext } from 'styled-components';
 import {Button, Input, ErrorMsg} from '../components';
 import { Alert } from 'react-native';
 import {validateEmail, removeWhitespace} from '../util';
-
 import { sendPasswordResetEmail } from "firebase/auth";
 import {auth} from '../firebase';
 
@@ -49,11 +48,11 @@ const FindPw = ({navigation})=> {
 
 
   //메일 전송 버튼 함수
-  const sendEmail = () => {
+  const sendEmail = async () => {
     
     // 전송 성공
     try{
-      // spinner.start();
+      spinner.start();
       sendPasswordResetEmail(auth, email);
 
       Alert.alert(
@@ -79,7 +78,7 @@ const FindPw = ({navigation})=> {
         case 'auth/invalid-email':
           Alert.alert('올바른 이메일을 입력해주세요');
           break;
-          // 에러 안 잡힘 (메일 전송은x) --> 수정하기!!
+        // 존재하지 않는 계정 -에러 안 잡힘 (메일 전송은x) --> 수정하기!!
         case 'auth/user-not-found':
           Alert.alert('존재하지 않는 계정입니다');
           break;
@@ -88,7 +87,7 @@ const FindPw = ({navigation})=> {
       }
     }
     finally{
-      // spinner.stop();
+      spinner.stop();
     }
   }
 

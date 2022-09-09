@@ -10,7 +10,8 @@ import BoardList from './BoardList';
 import EmergencyBoard from './EmergencyBoard';
 import Profile from './Profile';
 import Settings from './Settings';
+import EngBoard from './EngBoard';
 
 
 
-export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardList, EmergencyBoard, Profile, Settings};
+export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardList, EmergencyBoard, Profile, Settings, EngBoard};

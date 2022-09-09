@@ -14,12 +14,12 @@ const StyledText = styled.Text`
   color: ${ ({theme}) => theme.text};
 `;
 
-const MainBoard = ({navigation})=> {
+const EngBoard = ({navigation})=> {
   return (
     <Container>
-      <StyledText>MainBoard</StyledText>
+      <StyledText>EngBoard</StyledText>
     </Container>
   );
 } 
 
-export default MainBoard;
+export default EngBoard;

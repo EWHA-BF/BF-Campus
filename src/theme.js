@@ -51,4 +51,8 @@ export const theme = {
   activeMenuText: Colors.main,
   menuText: Colors.black,
 
+  //Spinner
+  spinnerBg: Colors.black,
+  spinnerIndicator: Colors.white, 
+
 }

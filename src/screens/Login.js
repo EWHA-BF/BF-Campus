@@ -7,17 +7,21 @@ import { Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {validateEmail, removeWhitespace} from '../util';
-
+import {UserContext, ProgressContext} from '../contexts';
 import {auth} from '../firebase';
+
 import {
   signInWithEmailAndPassword,
   onAuthStateChanged
 } from 'firebase/auth';
 
 
+
 //logo img url
 const LOGO='https://firebasestorage.googleapis.com/v0/b/rn-chat-app-89bdb.appspot.com/o/ios-icon.png?alt=media';
 
+
+//styled-components
 const Container = styled.View`
   flex : 1;
   align-items: center;
@@ -35,32 +39,30 @@ const StyledText = styled.Text`
 
 
 
-//현재 로그인한 사용자 정보 가져오기
-export const getCurUser = () => {
-  const {uid, email, displayName} = auth.currentUser;
-  return {uid, email, displayName};
-};
-
 
 const Login = ({navigation})=> {
   const insets = useSafeAreaInsets();
   const theme=useContext(ThemeContext);
   const refPw=useRef(null);
 
+  // user 정보 업데이트 위해 불러옴
+  const {setUser} = useContext(UserContext);
+  const {spinner} = useContext(ProgressContext);
+
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const [user, setUser] =  useState({});
 
-  //수정하기!
+
+  
   //로그인 상태 변경 감지
   onAuthStateChanged(auth, (currentUser)=> {
-    //user=auth.currentUser;
     if (currentUser) {
       setUser(currentUser);
-    } else {
-      // User is signed out
+    } 
+    else {
+      setUser({});
     }
   })
 
@@ -95,28 +97,26 @@ const Login = ({navigation})=> {
     // 로그인 성공
     try{
 
-      // spinner.start();
+      //spinner 실행
+      spinner.start();
 
+      //Signin
       const userInfo = await signInWithEmailAndPassword(auth, email, pw);
-      //setUser(userInfo.user);
+      
+      //user 업데이트
+      setUser(userInfo.user);
+      
       setEmail('');
       setPw('');
-
-      // 인증 여부에 따라 화면 이동 다르게
-      if(user.emailVerified)  {
-        navigation.navigate('EditBoardGrid');
-      }
-      else {
-        navigation.navigate('Verify');
-      }
     }
     // 로그인 실패
     catch(err){
       console.log(err.message);
-      console.log("로그인 실패"); 
+      Alert.alert("로그인 실패"); 
     }
     finally{
-      // spinner.stop();
+      // spinner 중지
+      spinner.stop();
     }
   }
 
@@ -135,10 +135,8 @@ const Login = ({navigation})=> {
         marginBottom: 30,
       }}/>
 
-      {/* Input에 icon 넣기!!! */}
       {/* 이메일 Input */}
       <Input
-      // label='이메일을 입력해주세요'
       placeholder='이메일'
       returnKeyType='next'
       value={email}
@@ -149,7 +147,6 @@ const Login = ({navigation})=> {
       {/* 패스워드 Input */}
       <Input
       ref={refPw}
-      // label='비밀번호를 입력해주세요'
       placeholder='비밀번호'
       returnKeyType='done'
       value={pw}
@@ -191,7 +188,6 @@ const Login = ({navigation})=> {
         color: theme.btnTextLink,
         fontSize: 19,
         fontWeight: '600',
-        // textDecorationLine:'underline',
       }}
       />
       {/* 비밀번호 찾기 버튼 */}
