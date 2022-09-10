@@ -7,6 +7,7 @@ const Colors = {
   red: '#e84118',
   light_grey: '#E0E0E0',
   light_green: '##3CD3B5',
+  main_red: '#E74B3C',
 }
 
 
@@ -15,9 +16,11 @@ export const theme = {
   text: Colors.black,
   errorText: Colors.red,
   ewha_green: Colors.main,
+  grey: Colors.grey,
   light_grey: Colors.light_grey,
   dark_grey: Colors.dark_grey,
   bg_green: Colors.light_green,
+  mainRed: Colors.main_red,
   
   //Button
   btnBgColor: Colors.main,

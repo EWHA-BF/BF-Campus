@@ -96,7 +96,7 @@ const Home = ({navigation})=> {
 
     {/*게시판 목록*/}  
     <TouchableOpacity
-     onPress={()=>navigation.navigate('BoardList')}
+     onPress={()=>navigation.navigate('BoardsList')}
      activeOpacity={0.8}>
       <StyledCompo style={{borderColor: theme.ewha_green}}>
         <CompoHeader style={{backgroundColor: theme.ewha_green}}>

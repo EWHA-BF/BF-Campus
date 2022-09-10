@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import {Button, Input} from '../components';
 import {UserContext} from '../contexts';
 import {getCurUser} from '../firebase';
+import {auth} from '../firebase';
+import {signOut} from 'firebase/auth';
+import {Alert} from 'react-native';
 
 const Container = styled.View`
   flex : 1;
@@ -24,11 +27,16 @@ const Profile = ({navigation, route})=> {
   //현재 로그인한 사용자 정보 받아오기
   const curUser=getCurUser();
 
+  // 로그아웃 함수
+  const signout= async ()=> {
+    await signOut(auth);
+    return {};
+  }
+
   return (
     <Container>
       <Input 
       label='name' 
-      // name이 안 뜨는 문제 - 회원가입시 못 받은 것으로 추정
       value={curUser.displayName}
       disabled
       />
@@ -40,8 +48,19 @@ const Profile = ({navigation, route})=> {
       <Button 
       title="로그아웃" 
 
-      // user 업데이트
-      onPress={()=>setUser({})}
+      // 로그아웃 및 user 업데이트
+      onPress={ async () => {
+        try{
+          await signout();
+        }
+        catch(e){
+          console.log(e.message);
+          Alert.alert("로그아웃 실패"); 
+        }
+        finally{
+          setUser({});
+        }
+      }}
 
       containerStyle={{
         padding: 15,

@@ -2,9 +2,11 @@ import React, {useContext} from 'react';
 import { ThemeContext } from 'styled-components';
 import {createStackNavigator} from '@react-navigation/stack';
 
+
 // import {Home} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
-import {Map, BoardList, EmergencyBoard, EngBoard} from '../screens';
+import {Map, BoardsList, EmergencyBoard, EngBoard, PostCreation} from '../screens';
+import Navigation from '.';
 
 
 const Stack = createStackNavigator();
@@ -32,12 +34,38 @@ const Main = ()=> {
     component={EmergencyBoard}
     />  
     <Stack.Screen 
-    name='BoardList' 
-    component={BoardList}
+    name='BoardsList' 
+    component={BoardsList}
     />  
     <Stack.Screen
     name='EngBoard'
     component={EngBoard}
+    options={{
+      headerTitle : '공학관',
+      headerShown: true,
+      headerTitleStyle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      headerTintColor: theme.ewha_green,
+      headerTitleAlign: 'center',
+      headerBackTitleVisible: false,
+    }}
+    />
+    <Stack.Screen
+    name='PostCreation'
+    component={PostCreation}
+    options={{
+      headerTitle : '글 쓰기',
+      headerShown: true,
+      headerTitleStyle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      headerTintColor: theme.ewha_green,
+      headerTitleAlign: 'center',
+      headerBackTitleVisible: false,
+    }}
     />
   </Stack.Navigator>
   );

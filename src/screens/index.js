@@ -6,12 +6,16 @@ import Verify from './Verify';
 import FindPw from './FindPw';
 import MainBoard from './MainBoard';
 import Map from './Map';
-import BoardList from './BoardList';
+import BoardsList from './BoardsList';
 import EmergencyBoard from './EmergencyBoard';
 import Profile from './Profile';
 import Settings from './Settings';
 import EngBoard from './EngBoard';
+import PoscoBoard from './PoscoBoard';
+import EccBoard from './EccBoard';
+import PostCreation from './PostCreation';
 
 
 
-export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardList, EmergencyBoard, Profile, Settings, EngBoard};
+
+export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardsList, EmergencyBoard, Profile, Settings, EngBoard, PoscoBoard, EccBoard, PostCreation};

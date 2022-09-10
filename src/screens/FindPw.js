@@ -52,7 +52,6 @@ const FindPw = ({navigation})=> {
     
     // 전송 성공
     try{
-      spinner.start();
       sendPasswordResetEmail(auth, email);
 
       Alert.alert(
@@ -87,7 +86,6 @@ const FindPw = ({navigation})=> {
       }
     }
     finally{
-      spinner.stop();
     }
   }
 

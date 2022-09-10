@@ -3,7 +3,7 @@ import styled, { ThemeContext }  from 'styled-components';
 import { Button } from '../components';
 import { TouchableOpacity, Text, FlatList, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import {DB} from '../firebase';
+import DB from '../firebase';
 
 
 
@@ -48,6 +48,7 @@ const ItemIcon = styled(Ionicons).attrs(({theme}) => ({
 
 //item 컴포넌트
 const Item= React.memo(({item: {id, title, description, createdAt}, onPress}) => {
+  console.log(id);
 
   return (
     <ItemContainer>
@@ -74,7 +75,7 @@ const StyledText = styled.Text`
 `;
 
 
-const EngBoard = ({navigation})=> {
+const PoscoBoard = ({navigation})=> {
   const theme=useContext(ThemeContext);
 
   //항목 목록 배열 상태 변수
@@ -146,4 +147,4 @@ const EngBoard = ({navigation})=> {
   );
 } 
 
-export default EngBoard;
+export default PoscoBoard;

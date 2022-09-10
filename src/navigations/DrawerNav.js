@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import {MainBoard, Home, Map, EmergencyBoard, Profile, Settings, BoardList} from '../screens'; 
+import {MainBoard, Home, Map, EmergencyBoard, Profile, Settings, BoardsList} from '../screens'; 
 import styled, { ThemeContext } from 'styled-components';
 
 const Drawer = createDrawerNavigator();
@@ -50,8 +50,8 @@ export default function DrawerNav() {
         title: '지도',
       }}/>
       <Drawer.Screen 
-      name='BoardList' 
-      component={BoardList} 
+      name='BoardsList' 
+      component={BoardsList} 
       options={{
         drawerLabel: '게시판',
         title: '게시판 목록'

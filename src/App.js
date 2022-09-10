@@ -4,32 +4,33 @@ import {ThemeProvider} from 'styled-components';
 import {theme} from './theme';
 import Navigation from './navigations';
 import { UserProvider, ProgressProvider } from './contexts';
+import {Login} from './screens';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+
+
 
 const App = () => {
-  // 오류 해결 시도
-  // const [state, setState] = useState(1);
-  // useEffect(() => {
-  //   const t = setInterval(
-  //     () => setState(valueGoesHere),
-  //     200,
-  //   );
-  //   return () => clearInterval(t);
-  // }, []);
 
   return (
     <ThemeProvider theme={theme}>
+      <SafeAreaProvider>
       {/* ProgressProvider */}
       <ProgressProvider>
+
       {/* UserProvider */}
       <UserProvider>
         {/* 상태바 */}
         <StatusBar 
         backgroundColor={theme.bgColor}
         barStyle="dark-content"/>
-        {/* 내비게이션 */}
-        <Navigation /> 
+        {/* 네비게이션 */}
+        <Navigation />  
+       
+        
       </UserProvider>
-      </ProgressProvider>
+
+      </ProgressProvider> 
+      </SafeAreaProvider>
     </ThemeProvider>
   );
 }

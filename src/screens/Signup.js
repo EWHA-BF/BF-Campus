@@ -6,6 +6,7 @@ import {Alert} from 'react-native';
 import {validateEmail, removeWhitespace} from '../util';
 import {UserContext, ProgressContext} from '../contexts';
 
+
 import {auth} from '../firebase';
 import {
   createUserWithEmailAndPassword,
@@ -49,6 +50,7 @@ const Signup = ({navigation})=>{
 
   // user 정보 업데이트 위해 불러옴
   const {setUser} = useContext(UserContext);
+  
   const {spinner} = useContext(ProgressContext);
 
 
@@ -98,9 +100,7 @@ const Signup = ({navigation})=>{
       const newUser = await createUserWithEmailAndPassword(auth, email, pw);
       
       //nickname 저장
-      // 닉네임 저장 안 되는 문제 해결 시도 - 변경한 코드. 여기 실행해봐야 앎
-      await updateProfile(newUser, {displayName: nickname});
-      console.log(newUser.user);
+      await updateProfile(auth.currentUser, {displayName: nickname});
       
       //user 업데이트
       setUser(newUser.user);

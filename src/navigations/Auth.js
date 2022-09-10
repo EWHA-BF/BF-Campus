@@ -77,7 +77,7 @@ const Auth = ()=> {
     options={{
       headerShown: false,
     }}
-    />
+    /> 
     {/* <Stack.Screen 
     name="EditBoardGrid" 
     component={EditBoardGrid}

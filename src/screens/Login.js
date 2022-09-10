@@ -8,6 +8,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {validateEmail, removeWhitespace} from '../util';
 import {UserContext, ProgressContext} from '../contexts';
+
+
 import {auth} from '../firebase';
 
 import {
@@ -47,6 +49,7 @@ const Login = ({navigation})=> {
 
   // user 정보 업데이트 위해 불러옴
   const {setUser} = useContext(UserContext);
+  
   const {spinner} = useContext(ProgressContext);
 
   const [email, setEmail] = useState('');
@@ -55,16 +58,16 @@ const Login = ({navigation})=> {
   const [disabled, setDisabled] = useState(true);
 
 
-  
+  //!!콜백 오류 발생!!
   //로그인 상태 변경 감지
-  onAuthStateChanged(auth, (currentUser)=> {
-    if (currentUser) {
-      setUser(currentUser);
-    } 
-    else {
-      setUser({});
-    }
-  })
+  // onAuthStateChanged(auth, (currentUser)=> {
+  //   if (currentUser) {
+  //     setUser(currentUser);
+  //   } 
+  //   else {
+  //     setUser({});
+  //   }
+  // })
 
 
 
