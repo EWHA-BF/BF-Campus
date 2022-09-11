@@ -58,16 +58,17 @@ const ItemIcon = styled(Ionicons).attrs(({theme}) => ({
 //item 컴포넌트
 const Item= React.memo(
   
-  ({item: {id, title, description, createdAt}, onPress}) => {
+  // createdAt 추가
+  ({item: {id, title, description}, onPress}) => {
 
   // createdAt 시간 변경해서 넣기!
   return (
-    <ItemContainer onPress={()=>{}}>
+    <ItemContainer onPress={()=> onPress({id, title, description})}>
       <ItemTextContainer>
-        <ItemTitle>{id}</ItemTitle>
+        <ItemTitle>{title}</ItemTitle>
         <ItemDesc>{description}</ItemDesc>
       </ItemTextContainer>
-      <ItemTime>{title}</ItemTime>
+      <ItemTime>{id}</ItemTime>
       <ItemIcon />
     </ItemContainer>
   )
@@ -132,13 +133,23 @@ const EngBoard = ({navigation, route})=> {
     <Container>
       <FlatList 
       data={posts}
-      renderItem={({item})=> <Item item={item} />}
+      renderItem={({item})=> 
+      <Item 
+      item={item} 
+      onPress={params=>{
+        navigation.navigate('Post', params);
+      }}
+      />}
       keyExtractor={item=>item['id']}
       windowSize={5}
       />
 
-      <TouchableOpacity 
-      onPress={(params)=>navigation.navigate('PostCreation', params)}
+      <TouchableOpacity
+      // 글 쓰기 버튼
+      // boardId 전달하며 이동 
+      onPress={ ()=>
+        navigation.navigate('PostCreation', {boardId: route.params.id})
+      }
       style={{
         justifyContent: 'center',
         alignItems: 'center',

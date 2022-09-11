@@ -25,16 +25,18 @@ export const getCurUser = () => {
 export const createPost = async({boardId, title, desc}) => {
   try {
     //받은 boardId의 'posts' collection에 document 생성
-    console.log(boardId);
-    // 마지막 부분에 message id
-    // boardID가 undefined로 지정됨
-    const docRef = doc(DB, `boards/${boardId}/posts`, '3');
-    await setDoc(docRef, { 
-      title,
+
+    // ** id 지정해서 올리기 (uid로 변경)
+    // ${uid}
+
+    await setDoc(doc(DB, "boards", `${boardId}/posts`, 'uid'), {
+      id: 'uid',
+      title: title,
       description: desc,
       createdAt: Date.now() 
     });
-
+    // post id 반환
+    return 'uid';
 
   } 
   catch (e) {

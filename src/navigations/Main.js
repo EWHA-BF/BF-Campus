@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 // import {Home} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
-import {Map, BoardsList, EmergencyBoard, EngBoard, PostCreation} from '../screens';
+import {Map, BoardsList, EmergencyBoard, EngBoard, PostCreation, Post} from '../screens';
 import Navigation from '.';
 
 
@@ -66,6 +66,20 @@ const Main = ()=> {
       headerBackTitleVisible: false,
     }}
     />
+    <Stack.Screen 
+    name='Post' 
+    component={Post}
+    options={{
+      headerShown: true,
+      headerTitleStyle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      headerTintColor: theme.ewha_green,
+      headerTitleAlign: 'center',
+      headerBackTitleVisible: false,
+    }}
+    /> 
   </Stack.Navigator>
   );
 } 

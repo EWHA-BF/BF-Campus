@@ -53,6 +53,7 @@ const Footer = styled.View`
 
 const PostCreation = ({navigation, route})=> {
   const theme=useContext(ThemeContext);
+  // console.log(route.params.boardId); //boardId 잘 받아 옴
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -85,14 +86,16 @@ const PostCreation = ({navigation, route})=> {
 
       //spinner 실행
       spinner.start();
-      console.log(route.params.id);
-      // const postId = await createPost({boardId: route.params.id, title: title, desc: desc});
-      await createPost({boardId: route.params.id, title: title, desc: desc});
-
-      navigation.replace('EngBoard', {title});
-
-      // 화면 이동하면서 id랑 제목 전달
-      // navigation.replace('EngBoard', {postId, title});
+      
+      // 함수 호출하여 db에 올리고 post id 받기
+      const postId = await createPost({
+        boardId: route.params.boardId, 
+        title: title.trim(), 
+        desc: desc.trim(),
+      });
+      
+      // 화면 이동하면서 postid, 제목, 내용 전달
+      navigation.replace('Post', {postId, title, description: desc});
     }
     // 로그인 실패
     catch(err){
@@ -197,6 +200,7 @@ const PostCreation = ({navigation, route})=> {
       style={{
         height: 300,
         maxHeight: 300,
+        textAlignVertical: 'top',
       }}/>
 
       <Footer>
