@@ -5,6 +5,9 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Alert} from 'react-native';
 import {validateEmail, removeWhitespace} from '../util';
 import {UserContext, ProgressContext} from '../contexts';
+import {createUser} from '../firebase';
+import {getCurUser} from '../firebase';
+
 
 
 import {auth} from '../firebase';
@@ -105,8 +108,17 @@ const Signup = ({navigation})=>{
       //user 업데이트
       setUser(newUser.user);
 
+      // user 불러오기
+      const curUser=getCurUser();
+      // DB - users에 저장
+      await createUser({
+        uid: curUser.uid, 
+        nickname: curUser.displayName, 
+      });
+
       setEmail('');
       setPw('');
+      setPwCheck('');
       setNickName('');
 
       

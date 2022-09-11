@@ -64,7 +64,7 @@ const Profile = ({navigation, route})=> {
 
       containerStyle={{
         padding: 15,
-        marginTop: 0,
+        marginTop: 15,
         marginBottom: 25,
         borderRadius: 30,
       }}

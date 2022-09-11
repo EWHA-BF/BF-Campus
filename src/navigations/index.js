@@ -19,8 +19,8 @@ const Navigation = () => {
     <NavigationContainer>
 
       {/* 로그인 여부에 따라 다른 화면 렌더링 */}
-      {/* {user.uid ? <Main/> : <Auth />}   */}
-      <Main/>
+      {user.uid ? <Main/> : <Auth />}  
+      {/* <Auth/> */}
       
 
       {/* 진행중이면 spinner 렌더링 */}
