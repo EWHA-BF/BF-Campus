@@ -7,23 +7,10 @@ import { Button } from '../components';
 import { TouchableOpacity, Text, FlatList, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {DB} from '../firebase';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 
 
 const {width} = Dimensions.get('window');
-
-// export const _DATA = [
-//   {txt: '공학관', noti: false},
-//   {txt: 'ECC', noti: false},
-//   {txt: '포스코관', noti: false},
-//   {txt: '교육관', noti: false},
-//   {txt: '학문관', noti: false},
-//   {txt: '조형예술관', noti: false},
-//   {txt: '음악관', noti: false},
-//   {txt: '중앙도서관', noti: false},
-//   {txt: '법학관', noti: false},
-//   {txt: 'SK관', noti: false},
-// ]
 
 
 //=-=- post item -=-=
@@ -50,12 +37,14 @@ const ItemTitle =styled.Text`
 //item 컴포넌트
 // noti 
 const Item= React.memo(
-  ({item: {title}, onPress}) => {
+  ({item: {id, title}, onPress}) => {
   // const [isNoti, setIsNoti] =useState({noti});
   const theme=useContext(ThemeContext);
 
   return (
-    <ItemContainer>
+    <ItemContainer
+    onPress={()=> onPress({id, title})}
+    >
         {/* { (isNoti)?  */}
           <Ionicons 
           name="notifications" 
@@ -107,21 +96,25 @@ const StyledText = styled.Text`
 const BoardsList = ({navigation})=> {
   const theme=useContext(ThemeContext);
 
+
   //게시판 목록 배열 상태변수
   const [boards, setBoards] =useState([]);
 
+
   // 마운트 될 때 동작
+  // board collection 모든 문서 불러오기 (실시간 업데이트 수신)
   useEffect(()=>{
-    const unsubscribe = () =>{
-      const querySnapshot = getDocs(collection(DB, "boards"));
-      const list=[];
+    const q = query(collection(DB, "boards"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const list = [];
       querySnapshot.forEach((doc) => {
-        list.push(doc.data()); 
-        console.log(doc.data());
+          // console.log(doc.id); //document id
+          list.push(doc.data());
+          // data에 id 포함됨!
       });
       setBoards(list);
-      console.log(list);
-    };
+    });
+    
     return ()=> unsubscribe();
   }, []);
 
@@ -129,8 +122,16 @@ const BoardsList = ({navigation})=> {
     <Container>
       <FlatList 
       data={boards}
-      renderItem={({item})=> <Item item={item} />}
-      keyExtractor={item=>item['title']}
+      
+      renderItem={({item})=> 
+        <Item 
+        item={item} 
+        onPress={params=>{
+          navigation.navigate('EngBoard', params);
+        }}
+        />
+      }
+      keyExtractor={item=>item['id']}
       windowSize={5}
       contentContainerStyle={{
         alignItems: 'center',

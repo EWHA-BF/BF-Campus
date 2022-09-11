@@ -41,7 +41,6 @@ const Main = ()=> {
     name='EngBoard'
     component={EngBoard}
     options={{
-      headerTitle : '공학관',
       headerShown: true,
       headerTitleStyle: {
         fontSize: 18,

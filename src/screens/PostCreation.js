@@ -4,7 +4,7 @@ import { Button, ErrorMsg } from '../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Text} from 'react-native';
 import { ThemeContext } from 'styled-components';
-import { TouchableOpacity, View} from 'react-native';
+import { TouchableOpacity, View, Alert} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { Ionicons } from '@expo/vector-icons';
 import {ProgressContext} from '../contexts';
@@ -51,7 +51,7 @@ const Footer = styled.View`
 
 
 
-const PostCreation = ({navigation})=> {
+const PostCreation = ({navigation, route})=> {
   const theme=useContext(ThemeContext);
 
   const [title, setTitle] = useState('');
@@ -85,13 +85,14 @@ const PostCreation = ({navigation})=> {
 
       //spinner 실행
       spinner.start();
+      console.log(route.params.id);
+      // const postId = await createPost({boardId: route.params.id, title: title, desc: desc});
+      await createPost({boardId: route.params.id, title: title, desc: desc});
 
-      //post 생성하고 id 받기
-      const id = await createPost({title: title.trim(), desc: desc.trim()})
-      
-      // navigation.goBack();
+      navigation.replace('EngBoard', {title});
+
       // 화면 이동하면서 id랑 제목 전달
-      navigation.replace('EngBoard', {id, title})
+      // navigation.replace('EngBoard', {postId, title});
     }
     // 로그인 실패
     catch(err){
@@ -127,7 +128,7 @@ const PostCreation = ({navigation})=> {
           </TouchableOpacity>
         );
       },
-      headerRight: ({onPress})=> {
+      headerRight: ()=> {
         return (
           // 글쓰기 완료 함수 호출
           <TouchableOpacity 

@@ -3,9 +3,18 @@ import styled, { ThemeContext }  from 'styled-components';
 import { Button } from '../components';
 import { TouchableOpacity, Text, FlatList, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import {DB} from '../firebase';
+import {DB, createPost} from '../firebase';
+import { collection, getDocs, onSnapshot, query,doc, orderBy } from "firebase/firestore";
 
+const Container = styled.View`
+  flex : 1;
+  background-color: ${ ({theme}) => theme.bgColor};
+`;
 
+const StyledText = styled.Text`
+  font-size: 24px;
+  color: ${ ({theme}) => theme.text};
+`;
 
 
 //=-=- post item -=-=
@@ -31,7 +40,7 @@ const ItemTitle =styled.Text`
 const ItemDesc =styled.Text`
   font-size: 16px;
   margin-top: 5px;
-  color: 'grey';
+  color: 'black';
 `;
 // 시간
 const ItemTime = styled.Text`
@@ -47,15 +56,18 @@ const ItemIcon = styled(Ionicons).attrs(({theme}) => ({
 
 
 //item 컴포넌트
-const Item= React.memo(({item: {id, title, description, createdAt}, onPress}) => {
+const Item= React.memo(
+  
+  ({item: {id, title, description, createdAt}, onPress}) => {
 
+  // createdAt 시간 변경해서 넣기!
   return (
-    <ItemContainer>
+    <ItemContainer onPress={()=>{}}>
       <ItemTextContainer>
-        <ItemTitle>{title}</ItemTitle>
+        <ItemTitle>{id}</ItemTitle>
         <ItemDesc>{description}</ItemDesc>
       </ItemTextContainer>
-      <ItemTime>{createdAt}</ItemTime>
+      <ItemTime>{title}</ItemTime>
       <ItemIcon />
     </ItemContainer>
   )
@@ -63,32 +75,18 @@ const Item= React.memo(({item: {id, title, description, createdAt}, onPress}) =>
 // =-=- -=-=-
 
 
-const Container = styled.View`
-  flex : 1;
-  background-color: ${ ({theme}) => theme.bgColor};
-`;
 
-const StyledText = styled.Text`
-  font-size: 24px;
-  color: ${ ({theme}) => theme.text};
-`;
-
-
-const EngBoard = ({navigation})=> {
+const EngBoard = ({navigation, route})=> {
   const theme=useContext(ThemeContext);
 
   //항목 목록 배열 상태 변수
   const [posts, setPosts] = useState([]);
 
-  //마운트될 때 동작
-  //post collection에서 읽어오기
-  useEffect(()=> {
-
-  }, [])
-
   //header
   useLayoutEffect(()=>{
     navigation.setOptions({
+      // board의 title을 전달받아 header title로 지정
+      headerTitle : route.params.title,
       headerLeft: ({onPress}) => {
         return (
           <Ionicons 
@@ -110,19 +108,37 @@ const EngBoard = ({navigation})=> {
         );
       },
     })
-  })
+  });
+
+  
+  // 마운트될 때 동작
+  // 해당 board(인자로 받은 id)의 post collection에서 읽어오기
+  useEffect(()=> {
+    const q = query(collection(DB, "boards", `${route.params.id}/posts`), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const list = [];
+      querySnapshot.forEach((doc) => {
+        list.push(doc.data());
+      });
+      setPosts(list);
+    });
+    return ()=> unsubscribe();
+  }, []);
+
+  
+
 
   return (
     <Container>
       <FlatList 
       data={posts}
       renderItem={({item})=> <Item item={item} />}
-      keyExtractor={item=>item['id'].toString()}
+      keyExtractor={item=>item['id']}
       windowSize={5}
       />
-      <TouchableOpacity 
-      onPress={()=>navigation.navigate('PostCreation')}
 
+      <TouchableOpacity 
+      onPress={(params)=>navigation.navigate('PostCreation', params)}
       style={{
         justifyContent: 'center',
         alignItems: 'center',
