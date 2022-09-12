@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import config from '../firebase.json';
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, setDoc, doc,updateDoc  } from "firebase/firestore";
 
 const app = initializeApp(config);
 export const auth = getAuth(app);
@@ -21,32 +21,58 @@ export const getCurUser = () => {
 
 
 //글 쓰기 함수
-export const createPost = async({boardId, title, desc}) => {
+export const createPost = async({boardId, title, desc, isEmer, image, uid, userName}) => {
   try {
     //받은 boardId의 'posts' collection에 document 생성
 
-    // ** id 지정해서 올리기 
-    await setDoc(doc(DB, "boards", `${boardId}/posts`, 'uid'), {
-      id: 'uid',
+     // id 자동 지정 (addDoc)
+     const docRef= await addDoc(collection(DB, "boards", `${boardId}/posts`), {
+      uid: uid,
+      userName: userName,
       title: title,
       description: desc,
-      createdAt: Date.now() 
-    });
-    // post id 반환
-    return 'uid';
+      createdAt: Date.now(),
+      isEmer: isEmer, 
+      image: image, 
+      id: '',
+     });
+      
 
+     //자동 지정된 id로 id 필드 업데이트
+     const curDocRef = doc(DB, "boards", `${boardId}/posts/${docRef.id}`);
+     await updateDoc(curDocRef, {
+      id: docRef.id,
+  
+    });
+
+    return docRef.id;
+    
+
+     // id를 uid로 지정해서 올리는 방법
+    // ** id 지정해서 올리기 
+    // await setDoc(doc(DB, "boards", `${boardId}/posts/${uid}`), {
+    //   id: uid,
+    //   title: title,
+    //   description: desc,
+    //   createdAt: Date.now(),
+    //   isEmer: isEmer, 
+    //   image: image, 
+    //   userName: userName
+    // });
+    // uid 반환
   } 
   catch (e) {
     console.error(e.message);
   }
 }
 
+
 //user 저장 함수
 export const createUser = async({uid, nickname}) => {
   try {
     //'users' collection에 document 생성
 
-    // ** id 지정해서 올리기 (uid로)
+    // id 지정해서 올리기 (uid로)
     await setDoc(doc(DB, "users", `${uid}`), {
       id: uid,
       nickname: nickname,

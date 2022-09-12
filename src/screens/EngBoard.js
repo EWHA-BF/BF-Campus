@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useLayoutEffect} from 'react';
 import styled, { ThemeContext }  from 'styled-components';
-import { Button } from '../components';
+import { Button, TimeStamp } from '../components';
 import { TouchableOpacity, Text, FlatList, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {DB, createPost} from '../firebase';
@@ -58,17 +58,17 @@ const ItemIcon = styled(Ionicons).attrs(({theme}) => ({
 //item 컴포넌트
 const Item= React.memo(
   
-  // createdAt 추가
-  ({item: {id, title, description}, onPress}) => {
+  ({item: {title, description, userName, createdAt, uid}, onPress}) => {
 
-  // createdAt 시간 변경해서 넣기!
+  // createdAt 시간 변경해서 넣기
+  // Time에 시간
   return (
-    <ItemContainer onPress={()=> onPress({id, title, description})}>
+    <ItemContainer onPress={()=> onPress({title, description, userName, createdAt, uid})}>
       <ItemTextContainer>
         <ItemTitle>{title}</ItemTitle>
         <ItemDesc>{description}</ItemDesc>
       </ItemTextContainer>
-      <ItemTime>{id}</ItemTime>
+      <ItemTime>{TimeStamp(createdAt)}</ItemTime>
       <ItemIcon />
     </ItemContainer>
   )

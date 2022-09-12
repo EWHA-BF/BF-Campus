@@ -6,6 +6,8 @@ import {UserContext, ProgressContext} from '../contexts';
 
 import {Spinner} from '../components';
 
+import {Post} from '../screens';
+
 
 
 const Navigation = () => {
@@ -20,7 +22,6 @@ const Navigation = () => {
 
       {/* 로그인 여부에 따라 다른 화면 렌더링 */}
       {user.uid ? <Main/> : <Auth />}  
-      {/* <Auth/> */}
       
 
       {/* 진행중이면 spinner 렌더링 */}

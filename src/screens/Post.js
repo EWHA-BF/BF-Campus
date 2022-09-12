@@ -1,10 +1,16 @@
 import React, {useLayoutEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {Text} from 'react-native';
 import { ThemeContext } from 'styled-components';
-import { TouchableOpacity, View, Alert} from 'react-native';
+import { TouchableOpacity, View, Alert, Dimensions, Text, ScrollView} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Checkbox from 'expo-checkbox';
+import { useNavigation } from '@react-navigation/native';
+import { TimeStamp } from '../components';
+import {getCurUser, DB} from '../firebase';
+import { doc, deleteDoc, collectionGroup, query, where, getDocs } from "firebase/firestore";
+
+
 
 
 const Container = styled.View`
@@ -16,10 +22,11 @@ const Container = styled.View`
 `;
 
 const StyledText = styled.Text`
-  font-size: 16px;
-  color: ${ ({theme}) => theme.bgColor};
-  background-color: ${ ({theme}) => theme.ewha_green};
-  padding: 20px;
+  font-size: 18px;
+  background-color: ${ ({theme}) => theme.bgColor};
+  color: ${ ({theme}) => theme.dark_grey};
+  /* font-weight: bold; */
+  /* padding: 20px; */
 `;
 
 const StyledInput = styled.TextInput`
@@ -33,40 +40,39 @@ const StyledInput = styled.TextInput`
   margin-top: 20px;
 `;
 
+const StyledImg= styled.Image`
+  background-color: ${({ theme }) => theme.light_grey};
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  margin: 20px;
+  margin-bottom: 100px;
+`;
+
+const HeaderText=styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+`;
+
 
 const Footer = styled.View`
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-start;
-  position: absolute;
-  bottom: 5px;
   width: 100%;
-  height: 50px;
+  height: 40px;
+  margin-top: 20px;
 `;
 
 
 
-
-const Post = ({navigation, route})=> {
+// navigation, 
+const Post = ({navigation,route})=> {
   const theme=useContext(ThemeContext);
-
-  // //수정 버튼 함수
-  // const _handleEditBtnPress = () => {
-  //   try{
-
-  //     // 화면 이동
-  //     // navigation.replace('PostCreation', {boardId,postId, title, desc});
-      
-  //   }
-  //   // 로그인 실패
-  //   catch(err){
-  //     console.log(err.message);
-  //     Alert.alert("실패"); 
-  //   }
-  //   finally{
-  //   }
-  // }
-
 
   //header
   useLayoutEffect(()=>{
@@ -83,37 +89,76 @@ const Post = ({navigation, route})=> {
           color={theme.ewha_green}/> 
         );
       },
-      // 수정 버튼 -해당 uid의 user만 보이게
       headerRight: ()=> {
-        return (
-          // 수정 함수 호출
-          <TouchableOpacity 
-          onPress={()=> {}}
-          style={{
-            borderRadius: 20,
-            paddingHorizontal: 12,
-            paddingVertical: 8,
-            backgroundColor: theme.mainRed,
-            marginRight: 10,
-          }}
-          >
-          <Text
-          style={{
-            fontSize: 17,
-            color: 'white',
-          }}
-          >수정</Text>
-          </TouchableOpacity>
-        );
+        // 수정 버튼 -해당 uid의 user만 보이게
+        // return (
+        //   <TouchableOpacity 
+        //   onPress={()=> {}}
+        //   style={{
+        //     borderRadius: 20,
+        //     paddingHorizontal: 12,
+        //     paddingVertical: 8,
+        //     backgroundColor: theme.bgColor,
+        //     marginRight: 10,
+        //   }}
+        //   >
+        //   <Text
+        //   style={{
+        //     fontSize: 17,
+        //     color: theme.ewha_green,
+        //   }}
+        //   >수정</Text>
+        //   </TouchableOpacity>
+        // );
       }
     })
   })
 
+  const curUser=getCurUser();
+
+  // 삭제 버튼 함수
+  const _handleDeleteBtnPress = async () => {
+    // Alert.alert(
+    //     "글을 삭제하시겠습니까?",
+    //     [
+    //       {
+    //         text: "아니오",
+    //         onPress: () => {},
+    //         style: "cancel"
+    //       },
+    //       { text: "예", onPress: () => 
+    //       // collection group 접근
+            // await deleteDoc(doc(DB, "posts", `${route.params.id}`))
+
+            // 컬렉션 그룹 쿼리-오류
+            // const nowPost = query(collectionGroup(DB, 'posts'), where('id', '==', `${route.params.id}`));
+            // const querySnapshot = await getDocs(nowPost);
+            // querySnapshot.forEach((doc) => {
+            //   console.log(doc);
+            //   deleteDoc(doc);
+            // });
+      //     }
+      //   ],
+      // );  
+  }
+
   return (
-    <KeyboardAwareScrollView 
+    
+    <ScrollView>
+    {/* <KeyboardAwareScrollView 
     contentContainerStyle={{flex: 1}}
-    extraScrollHeight={20}>
+    extraScrollHeight={20}> */}
     <Container>
+
+      <HeaderText>
+        <StyledText>작성자: {route.params.userName}</StyledText>
+        <StyledText style={{
+          fontWeight: 'normal',
+          fontSize: 15,
+        }}>
+          {TimeStamp(route.params.createdAt)}
+          </StyledText>
+      </HeaderText>
       
       {/* 제목 */}
       <StyledInput 
@@ -137,30 +182,59 @@ const Post = ({navigation, route})=> {
 
 
       <Footer>
-        {/* 삭제 버튼 */} 
-          <TouchableOpacity 
-          onPress={()=> {}}
-          style={{
-            width: 60,
-            height: 35,
-            justifyContent: 'center',
-            alignContent: 'center',
-            paddingTop: 5,
-          }}
-          >
-          <Text
-          style={{
-            marginRight: 7, 
+        {/* 긴급 체크 버튼 */} 
+        <View style={{ 
+          width: 60,
+          height: 35,
+          flexDirection: 'row', 
+          justifyContent: 'center',
+          alignContent: 'center',
+          paddingTop: 5,
+          }}>
+          <Checkbox
+            value={route.params.isEmer}
+            disabled={true}
+          />
+          <Text style={{
+            marginLeft: 12, 
             fontSize: 18, 
             color: theme.mainRed, 
-            textAlign:'right', 
-            fontWeight: 'bold'
-          }}
-          >삭제</Text>
-          </TouchableOpacity>
+            textAlign:'center', 
+            fontWeight: 'bold'}}>긴급</Text>
+        </View>
       </Footer>
+
+      
+      <StyledImg source={{ uri: route.params.image }} /> 
+
+
+      { 
+      ((route.params.uid) == (curUser.uid)) &&
+        <TouchableOpacity
+        // 삭제 버튼
+        onPress={_handleDeleteBtnPress}
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: theme.bgColor,
+          width: 100,
+          padding: 10,
+          marginTop: 0,
+          position: 'absolute',
+          bottom: 40,
+          left: (Dimensions.get('window').width / 2)-(100/2),
+        }}
+        >
+        <Text style={{
+          fontSize: 18,
+          fontWeight: 'bold',
+          color: theme.mainRed,
+        }}>글 삭제</Text>
+        </TouchableOpacity>
+      }
+      
     </Container>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 } 
 

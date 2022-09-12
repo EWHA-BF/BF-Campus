@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import { ThemeContext } from 'styled-components';
 import {createStackNavigator} from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity, View, Alert, Dimensions, Text} from 'react-native';
 
 
 // import {Home} from '../screens'; 
