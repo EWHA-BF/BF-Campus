@@ -118,32 +118,30 @@ const Post = ({navigation,route})=> {
 
   // 삭제 버튼 함수
   const _handleDeleteBtnPress = async () => {
-    // Alert.alert(
-    //     "글을 삭제하시겠습니까?",
-    //     [
-    //       {
-    //         text: "아니오",
-    //         onPress: () => {},
-    //         style: "cancel"
-    //       },
-    //       { text: "예", onPress: () => 
-    //       // collection group 접근
-            // await deleteDoc(doc(DB, "posts", `${route.params.id}`))
-
-            // 컬렉션 그룹 쿼리-오류
-            // const nowPost = query(collectionGroup(DB, 'posts'), where('id', '==', `${route.params.id}`));
-            // const querySnapshot = await getDocs(nowPost);
-            // querySnapshot.forEach((doc) => {
-            //   console.log(doc);
-            //   deleteDoc(doc);
-            // });
-      //     }
-      //   ],
-      // );  
+    Alert.alert(
+        "글 삭제",
+        "정말로 삭제하시겠습니까?",
+        [
+          {
+            text: "취소",
+            onPress: () => {},
+            style: "cancel"
+          },
+          { text: "삭제", onPress: async () => {
+            // 컬렉션 그룹 - id 지정해서 삭제하기
+            const q = query(collectionGroup(DB, 'posts'), where('id', '==', route.params.id));
+            const data=await getDocs(q);  
+            await deleteDoc(data.docs[0].ref);
+            // 화면 이동
+            navigation.goBack();
+          }}
+        ],
+      );  
   }
 
+  console.log(route.params);
   return (
-    
+
     <ScrollView>
     {/* <KeyboardAwareScrollView 
     contentContainerStyle={{flex: 1}}

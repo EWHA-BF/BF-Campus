@@ -27,6 +27,7 @@ const StyledText = styled.Text`
   color: ${ ({theme}) => theme.bgColor};
   background-color: ${ ({theme}) => theme.ewha_green};
   padding: 20px;
+  line-height: 30px;
 `;
 
 const StyledInput = styled.TextInput`
@@ -175,7 +176,7 @@ const PostCreation = ({route})=> {
 
     
       // 함수 호출하여 db에 올리고 post id 받기
-      const postId = await createPost({
+      const id = await createPost({
         boardId: route.params.boardId, 
         title: title.trim(), 
         desc: desc.trim(),
@@ -202,7 +203,7 @@ const PostCreation = ({route})=> {
       // // 화면 이동하면서 필요한 내용 전달
       // // 여기가 문제
         navigation.replace('Post', {
-          postId, 
+          id, 
           title, 
           description: desc, 
           image, 
@@ -284,12 +285,9 @@ const PostCreation = ({route})=> {
 
       {/* 안내 문구 */}
       <StyledText>
-        가이드라인
-        가이드라인
-        가이드라인
-        가이드라인
-        가이드라인
-        가이드라인
+        {
+`❕이용자님의 게시글은 누군가에게 매우 중요한 정보입니다. 모두에게 공개되는 만큼 게시글을 신중하게 작성하여 주시기 바랍니다. 
+❕상황에 맞는 사진을 올려 주시면 더 유용하고 자세한 정보를 제공할 수 있습니다.`}
       </StyledText>
 
       {/* 제목 입력 */}

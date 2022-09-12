@@ -5,8 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Alert} from 'react-native';
 import {validateEmail, removeWhitespace} from '../util';
 import {UserContext, ProgressContext} from '../contexts';
-import {createUser} from '../firebase';
-import {getCurUser} from '../firebase';
+import {createUser, getCurUser} from '../firebase';
 
 
 

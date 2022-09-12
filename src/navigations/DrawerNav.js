@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import {MainBoard, Home, Map, EmergencyBoard, Profile, Settings, BoardsList} from '../screens'; 
+import {MainBoard, Home, Map, EmergencyBoard, Profile, Settings, BoardsList, MyPosts, MyBoards} from '../screens'; 
 import styled, { ThemeContext } from 'styled-components';
 
 const Drawer = createDrawerNavigator();
@@ -65,6 +65,14 @@ export default function DrawerNav() {
         drawerLabelStyle: {fontSize: 17, marginLeft: 10},
       }}/>
       <Drawer.Screen 
+      name='MyBoards' 
+      component={MyBoards} 
+      options={{
+        drawerLabel: '즐겨찾는 게시판',
+        title: '즐겨찾는 게시판 목록',
+        drawerLabelStyle: {fontSize: 17, marginLeft: 10},
+      }}/>
+      <Drawer.Screen 
       name='EmergencyBoard' 
       component={EmergencyBoard} 
       options={{
@@ -80,12 +88,20 @@ export default function DrawerNav() {
         title: '내 정보'
       }}/>
       <Drawer.Screen 
+      name='MyPosts' 
+      component={MyPosts} 
+      options={{
+        drawerLabel: '내가 쓴 글',
+        title: '내가 쓴 글',
+        drawerLabelStyle: {fontSize: 17, marginLeft: 10},
+      }}/>
+      {/* <Drawer.Screen 
       name='Settings' 
       component={Settings} 
       options={{
         drawerLabel: '설정',
         title: '설정'
-      }}/>
+      }}/> */}
     </Drawer.Navigator>
   );
 }

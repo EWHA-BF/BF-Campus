@@ -119,7 +119,7 @@ const FindPw = ({navigation})=> {
         fontWeight: '600',
       }}
       />
-      <Button 
+      {/* <Button 
       title="인증 메일이 오지 않나요?" 
       onPress={()=> {}}
       containerStyle={{
@@ -132,7 +132,7 @@ const FindPw = ({navigation})=> {
         fontWeight: '500',
         textDecorationLine:'underline',
       }}
-      />
+      /> */}
     </Container>
   );
 } 

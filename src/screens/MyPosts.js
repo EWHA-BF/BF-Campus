@@ -4,7 +4,7 @@ import { Button, TimeStamp } from '../components';
 import { TouchableOpacity, Text, FlatList, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { collectionGroup, query, where, getDocs, onSnapshot, orderBy } from "firebase/firestore";
-import {DB} from '../firebase';
+import {DB, getCurUser} from '../firebase';
 
 const Container = styled.View`
   flex : 1;
@@ -79,16 +79,19 @@ const Item= React.memo(
 
 
 
-const EmergencyBoard = ({navigation, route})=> {
+const MyPosts = ({navigation, route})=> {
   const theme=useContext(ThemeContext);
 
   //항목 목록 배열 상태 변수
   const [posts, setPosts] = useState([]);
+
+  // user 불러오기
+  const curUser=getCurUser();
   
   // 마운트될 때 동작
-  // 모든 post collection에서 isEmer=true인 문서 읽어오기 - 날짜 내림차순
+  // 모든 post collection에서 uid=curUser.uid인 문서 읽어오기 - 날짜 내림차순
   useEffect(()=> {
-    const q = query(collectionGroup(DB, 'posts'), where('isEmer', '==', true), orderBy('createdAt', 'desc'));
+    const q = query(collectionGroup(DB, 'posts'), where('uid', '==', curUser.uid), orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const list = [];
       querySnapshot.forEach((doc) => {
@@ -118,4 +121,4 @@ const EmergencyBoard = ({navigation, route})=> {
   );
 } 
 
-export default EmergencyBoard;
+export default MyPosts;

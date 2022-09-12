@@ -23,8 +23,9 @@ const ItemContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   border-bottom-width: 1px;
-  border-color: 'black';
-  padding: 15px 20px;
+  border-color: ${ ({theme}) => theme.light_grey};
+  padding: 20px 25px;
+  padding-right: 15px;
 `;
 // 제목과 내용을 감싸는 컨테이너
 const ItemTextContainer = styled.View`
@@ -33,37 +34,38 @@ const ItemTextContainer = styled.View`
 `;
 // 제목
 const ItemTitle =styled.Text`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 `;
 // 내용
 const ItemDesc =styled.Text`
-  font-size: 16px;
-  margin-top: 5px;
+  font-size: 15px;
+  margin-top: 13px;
   color: 'black';
 `;
 // 시간
 const ItemTime = styled.Text`
-  font-size: 12px;
+  font-size: 14px;
   color: 'black';
+  margin-right: 10px;
 `;
 // 아이콘
 const ItemIcon = styled(Ionicons).attrs(({theme}) => ({
   name: 'chevron-forward-sharp',
-  size: 24,
-  color: theme.text,
+  size: 22,
+  color: theme.light_grey,
 }))``;
 
 
 //item 컴포넌트
 const Item= React.memo(
   
-  ({item: {title, description, userName, createdAt, uid}, onPress}) => {
+  ({item: {title, description, userName, createdAt, uid, image, isEmer, id}, onPress}) => {
 
   // createdAt 시간 변경해서 넣기
   // Time에 시간
   return (
-    <ItemContainer onPress={()=> onPress({title, description, userName, createdAt, uid})}>
+    <ItemContainer onPress={()=> onPress({title, description, userName, createdAt, uid, image, isEmer, id})}>
       <ItemTextContainer>
         <ItemTitle>{title}</ItemTitle>
         <ItemDesc>{description}</ItemDesc>
@@ -113,7 +115,7 @@ const EngBoard = ({navigation, route})=> {
 
   
   // 마운트될 때 동작
-  // 해당 board(인자로 받은 id)의 post collection에서 읽어오기
+  // 해당 board(인자로 받은 id)의 post collection에서 모든 문서 읽어오기
   useEffect(()=> {
     const q = query(collection(DB, "boards", `${route.params.id}/posts`), orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {

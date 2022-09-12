@@ -30,7 +30,6 @@ const Profile = ({navigation, route})=> {
   // 로그아웃 함수
   const signout= async ()=> {
     await signOut(auth);
-    return {};
   }
 
   return (

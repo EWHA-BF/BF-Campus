@@ -34,6 +34,17 @@ const Main = ()=> {
     <Stack.Screen 
     name='EmergencyBoard' 
     component={EmergencyBoard}
+    // options={{
+    //   headerShown: true,
+    //   headerTitleStyle: {
+    //     fontSize: 18,
+    //     fontWeight: 'bold',
+    //   },
+    //   headerTintColor: theme.ewha_green,
+    //   headerTitleAlign: 'center',
+    //   headerBackTitleVisible: false,
+    // }}
+    
     />  
     <Stack.Screen 
     name='BoardsList' 

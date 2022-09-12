@@ -15,8 +15,10 @@ import PoscoBoard from './PoscoBoard';
 import EccBoard from './EccBoard';
 import PostCreation from './PostCreation';
 import Post from './Post';
+import MyPosts from './MyPosts';
+import MyBoards from './MyBoards';
 
 
 
 
-export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardsList, EmergencyBoard, Profile, Settings, EngBoard, PoscoBoard, EccBoard, PostCreation, Post};
+export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardsList, EmergencyBoard, Profile, Settings, EngBoard, PoscoBoard, EccBoard, PostCreation, Post, MyPosts, MyBoards};
