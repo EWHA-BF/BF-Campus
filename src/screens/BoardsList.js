@@ -1,13 +1,10 @@
-// 알림 아이콘 작동 수정하기
-
-
 import React, {useState, useEffect, useContext, useLayoutEffect} from 'react';
 import styled, { ThemeContext }  from 'styled-components';
 import { Button } from '../components';
 import { TouchableOpacity, Text, FlatList, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import {DB} from '../firebase';
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import {DB, getCurUser} from '../firebase';
+import { collection, getDoc, onSnapshot, query, doc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 
 
 const {width} = Dimensions.get('window');
@@ -36,37 +33,50 @@ const ItemTitle =styled.Text`
 
 //item 컴포넌트
 // noti 
-const Item= React.memo(
-  ({item: {id, title}, onPress}) => {
-  // const [isNoti, setIsNoti] =useState({noti});
+const Item= React.memo( 
+  ({item: {id, title, starUsers}, onPress}) => {
   const theme=useContext(ThemeContext);
+  const curUser=getCurUser();
 
   return (
     <ItemContainer
     onPress={()=> onPress({id, title})}
     >
-        {/* { (isNoti)?  */}
-          <Ionicons 
-          name="notifications" 
-          size={23}
-          style={{
-            marginHorizontal: 15
-          }}
-          color={theme.bgColor}
-          onPress={ () => {}
-              // (isNoti)=> setIsNoti(!isNoti)
-          }/>
-          {/* // :
-          // <Ionicons 
-          // name="notifications-off-outline" 
-          // size={23}
-          // style={{
-          //   marginHorizontal: 15
-          // }}
-          // color={theme.bgColor}
-          // onPress={
-          //     (isNoti)=> setIsNoti(!isNoti)
-          // }/> } */}
+      {/* 해당 board의 starUsers에 가서 확인하고 uid 있으면 진한 하트 렌더링 */}
+      {
+        ((starUsers.indexOf(curUser.uid))!=(-1))?
+        <Ionicons 
+        name="heart" 
+        size={25}
+        style={{
+          marginLeft: 20,
+          marginRight: 10,
+        }}
+        color={theme.bgColor}
+        onPress={ () => {
+          // 해당 board의 starUsers 배열에 가서 uid 삭제
+          const arrRef = doc(DB, 'boards', `${id}`);
+          updateDoc(arrRef, {
+            starUsers: arrayRemove(`${curUser.uid}`)
+          });
+        }}/>
+        :
+        <Ionicons 
+        name="heart-dislike-outline" 
+        size={25}
+        style={{
+          marginLeft: 20,
+          marginRight: 10,
+        }}
+        color={theme.bgColor}
+        onPress={ () => {
+          // 해당 board의 starUsers 배열에 가서 uid 추가
+          const arrRef = doc(DB, 'boards', `${id}`);
+          updateDoc(arrRef, {
+            starUsers: arrayUnion(`${curUser.uid}`)
+          });
+        }}/> 
+      }
       <ItemTitle>{title}</ItemTitle>
       <Ionicons 
         name='chevron-forward-outline'
@@ -102,15 +112,15 @@ const BoardsList = ({navigation})=> {
 
 
   // 마운트 될 때 동작
-  // board collection 모든 문서 불러오기 (실시간 업데이트 수신)
+  // board collection 모든 문서 불러오기 
   useEffect(()=>{
+      // !!!
     const q = query(collection(DB, "boards"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const list = [];
       querySnapshot.forEach((doc) => {
           // console.log(doc.id); //document id
           list.push(doc.data());
-          // data에 id 포함됨!
       });
       setBoards(list);
     });

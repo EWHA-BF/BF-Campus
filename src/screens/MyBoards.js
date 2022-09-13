@@ -1,13 +1,10 @@
-// 알림 아이콘 안 보이게
-
-
 import React, {useState, useEffect, useContext, useLayoutEffect} from 'react';
 import styled, { ThemeContext }  from 'styled-components';
 import { Button } from '../components';
 import { TouchableOpacity, Text, FlatList, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import {DB} from '../firebase';
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import {DB, getCurUser} from '../firebase';
+import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 
 
 const {width} = Dimensions.get('window');
@@ -35,10 +32,8 @@ const ItemTitle =styled.Text`
 
 
 //item 컴포넌트
-// noti 
 const Item= React.memo(
   ({item: {id, title}, onPress}) => {
-  // const [isNoti, setIsNoti] =useState({noti});
   const theme=useContext(ThemeContext);
 
   return (
@@ -78,31 +73,23 @@ const MyBoards = ({navigation})=> {
   //게시판 목록 배열 상태변수
   const [boards, setBoards] =useState([]);
 
+  const curUser=getCurUser();
+
 
   // 마운트 될 때 동작
-  // board collectiond에서 my가 true인 문서 불러오기
   useEffect(()=>{
     
-    // 여기부터 하기!!
-    // 배열에 문자열이(boardId) 존재하는지 확인하기
-    // const q = query(
-    //   collection(db, "post"), 
-    //   where("keyword", "array-contains", keyword.toLowerCase()),
-    // );
-    
-    // const resSnap = await getDocs(q);
+    const boardsRef = collection(DB, "boards");
 
-
-    // const q = query(collection(DB, "boards"));
-    // const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    //   const list = [];
-    //   querySnapshot.forEach((doc) => {
-    //       // console.log(doc.id); //document id
-    //       list.push(doc.data());
-    //       // data에 id 포함됨!
-    //   });
-    //   setBoards(list);
-    // });
+    // board collection에서 starUsers 필드 배열에 uid 값을 포함하는 board 문서를 불러오기
+    const q = query(boardsRef, where("starUsers", "array-contains", `${curUser.uid}`));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const list = [];
+      querySnapshot.forEach((doc) => {
+          list.push(doc.data());
+      });
+      setBoards(list);
+    });
     
     return ()=> unsubscribe();
   }, []);

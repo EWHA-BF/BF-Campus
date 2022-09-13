@@ -139,7 +139,6 @@ const Post = ({navigation,route})=> {
       );  
   }
 
-  console.log(route.params);
   return (
 
     <ScrollView>

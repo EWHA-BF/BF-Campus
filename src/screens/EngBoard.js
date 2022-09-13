@@ -62,8 +62,6 @@ const Item= React.memo(
   
   ({item: {title, description, userName, createdAt, uid, image, isEmer, id}, onPress}) => {
 
-  // createdAt 시간 변경해서 넣기
-  // Time에 시간
   return (
     <ItemContainer onPress={()=> onPress({title, description, userName, createdAt, uid, image, isEmer, id})}>
       <ItemTextContainer>

@@ -7,7 +7,7 @@ import { TouchableOpacity, View, Alert, Dimensions, Text} from 'react-native';
 
 // import {Home} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
-import {Map, BoardsList, EmergencyBoard, EngBoard, PostCreation, Post} from '../screens';
+import {Map, MyBoards, EmergencyBoard, EngBoard, PostCreation, Post} from '../screens';
 import Navigation from '.';
 
 
@@ -34,22 +34,15 @@ const Main = ()=> {
     <Stack.Screen 
     name='EmergencyBoard' 
     component={EmergencyBoard}
-    // options={{
-    //   headerShown: true,
-    //   headerTitleStyle: {
-    //     fontSize: 18,
-    //     fontWeight: 'bold',
-    //   },
-    //   headerTintColor: theme.ewha_green,
-    //   headerTitleAlign: 'center',
-    //   headerBackTitleVisible: false,
-    // }}
-    
     />  
     <Stack.Screen 
+    name='MyBoards' 
+    component={MyBoards}
+    />  
+    {/* <Stack.Screen 
     name='BoardsList' 
     component={BoardsList}
-    />  
+    />   */}
     <Stack.Screen
     name='EngBoard'
     component={EngBoard}

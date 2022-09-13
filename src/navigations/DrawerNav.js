@@ -40,7 +40,7 @@ export default function DrawerNav() {
       component={Home} 
       options={{
         drawerLabel: '홈',
-        title: '앱 이름',
+        title: 'BFCampus',
       }}/>
       <Drawer.Screen 
       name='Map' 
@@ -60,16 +60,8 @@ export default function DrawerNav() {
       name='MainBoard' 
       component={MainBoard} 
       options={{
-        drawerLabel: '전체 게시판',
-        title: '전체 게시판',
-        drawerLabelStyle: {fontSize: 17, marginLeft: 10},
-      }}/>
-      <Drawer.Screen 
-      name='MyBoards' 
-      component={MyBoards} 
-      options={{
-        drawerLabel: '즐겨찾는 게시판',
-        title: '즐겨찾는 게시판 목록',
+        drawerLabel: '전체 글',
+        title: '전체 글',
         drawerLabelStyle: {fontSize: 17, marginLeft: 10},
       }}/>
       <Drawer.Screen 
@@ -80,6 +72,15 @@ export default function DrawerNav() {
         title: '긴급 게시판',
         drawerLabelStyle: {fontSize: 17, marginLeft: 10},
       }}/>
+      <Drawer.Screen 
+      name='MyBoards' 
+      component={MyBoards} 
+      options={{
+        drawerLabel: '즐겨찾는 게시판',
+        title: '즐겨찾는 게시판',
+        drawerLabelStyle: {fontSize: 17, marginLeft: 10},
+      }}/>
+      
       <Drawer.Screen 
       name='Profile' 
       component={Profile} 

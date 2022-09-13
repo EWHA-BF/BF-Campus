@@ -85,34 +85,30 @@ const Home = ({navigation})=> {
           style={{flex: 1}}
           color='white'/> 
         </CompoHeader>
-          <StyledText style={{flex: 2, textAlign: 'center', paddingTop: 20, fontSize: 16, color: 'grey'}}>캠퍼스 내 긴급한 소식을 빠르게 알려 드립니다!</StyledText>
+          <StyledText style={{flex: 2, textAlign: 'center', paddingTop: 20, fontSize: 16, color: 'grey', paddingHorizontal: 20,}}>캠퍼스 내 긴급한 소식을 알려 드립니다!</StyledText>
       </StyledCompo>
      </TouchableOpacity>
       
 
-    {/* 나의 게시판
-    <BoardGrid/>  */}
-
-
-    {/*게시판 목록*/}  
+    {/*즐겨찾는 게시판*/}  
     <TouchableOpacity
-     onPress={()=>navigation.navigate('BoardsList')}
+     onPress={()=>navigation.navigate('MyBoards')}
      activeOpacity={0.8}>
       <StyledCompo style={{borderColor: theme.ewha_green}}>
         <CompoHeader style={{backgroundColor: theme.ewha_green}}>
         <Ionicons 
-          name="menu" 
+          name="heart" 
           size={22}
           style={{flex: 1, marginLeft: 15,}}
           color='white'/> 
-        <StyledText style={{color: 'white', flex: 6, fontSize: 18, fontWeight: 'bold'}}>게시판 목록</StyledText>
+        <StyledText style={{color: 'white', flex: 6, fontSize: 18, fontWeight: 'bold'}}>즐겨찾는 게시판</StyledText>
         <Ionicons 
           name="ios-chevron-forward-outline" 
           size={25}
           style={{flex: 1}}
           color='white'/> 
         </CompoHeader>
-          <StyledText style={{flex: 2, textAlign: 'center', paddingTop: 20, fontSize: 16, color: 'grey'}}>게시판에서 원하는 건물의 정보만 찾아 보세요!</StyledText>
+          <StyledText style={{flex: 2, textAlign: 'center', paddingTop: 20, fontSize: 16, color: 'grey', paddingHorizontal: 20,}}>원하는 건물의 정보만 빠르게 확인하세요!</StyledText>
       </StyledCompo>
      </TouchableOpacity>
     
