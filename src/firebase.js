@@ -77,6 +77,7 @@ export const createUser = async({uid, nickname}) => {
       id: uid,
       nickname: nickname,
       myBoard: [],
+      lastPost: "ss",
     });
     // uid 반환
     return uid;
