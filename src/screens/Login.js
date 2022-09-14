@@ -20,7 +20,7 @@ import {
 
 
 //logo img url
-const LOGO='https://firebasestorage.googleapis.com/v0/b/rn-chat-app-89bdb.appspot.com/o/ios-icon.png?alt=media';
+const LOGO='https://imgur.com/WlBv9GC.png';
 
 
 //styled-components
@@ -133,8 +133,8 @@ const Login = ({navigation})=> {
       <Image 
       url={LOGO}
       containerStyle={{
-        width: 100,
-        height: 100,
+        width: 180,
+        height: 180,
         marginBottom: 30,
       }}/>
 
@@ -183,13 +183,13 @@ const Login = ({navigation})=> {
       title="이메일로 회원가입하기" 
       onPress={()=> navigation.navigate('Signup')}
       containerStyle={{
-        marginTop: 5,
+        marginTop: 3,
         marginBottom: 50,
         backgroundColor: 'transparent', 
       }}
       textStyle={{
         color: theme.btnTextLink,
-        fontSize: 19,
+        fontSize: 18,
         fontWeight: '600',
       }}
       />
@@ -203,7 +203,7 @@ const Login = ({navigation})=> {
       }}
       textStyle={{
         color: theme.btnDisabled,
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: '500',
         textDecorationLine:'underline',
       }}

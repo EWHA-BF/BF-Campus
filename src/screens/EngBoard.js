@@ -98,16 +98,6 @@ const EngBoard = ({navigation, route})=> {
           color={theme.ewha_green}/> 
         );
       },
-      headerRight: () => {
-        return (
-          <Ionicons 
-          name="search" 
-          size={25}
-          style={{marginRight:10,}}
-          color={theme.ewha_green}
-          onPress={()=> {}}/> 
-        );
-      },
     })
   });
 

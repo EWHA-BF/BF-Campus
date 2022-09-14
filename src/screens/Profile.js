@@ -10,14 +10,16 @@ import {Alert} from 'react-native';
 const Container = styled.View`
   flex : 1;
   background-color: ${ ({theme}) => theme.bgColor};
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 0 20px;
+  padding: 0 30px;
 `;
 
 const StyledText = styled.Text`
-  font-size: 24px;
+  font-size: 20px;
   color: ${ ({theme}) => theme.text};
+  font-weight: 600;
+  margin: 10px 0;
 `;
 
 const Profile = ({navigation, route})=> {
@@ -34,7 +36,9 @@ const Profile = ({navigation, route})=> {
 
   return (
     <Container>
-      <Input 
+      <StyledText>닉네임  |   {curUser.displayName}</StyledText>
+      <StyledText>이메일  |   {curUser.email}</StyledText>
+      {/* <Input 
       label='name' 
       value={curUser.displayName}
       disabled
@@ -43,7 +47,7 @@ const Profile = ({navigation, route})=> {
       label='email' 
       value={curUser.email}
       disabled
-      />
+      /> */}
       <Button 
       title="로그아웃" 
 
@@ -63,7 +67,7 @@ const Profile = ({navigation, route})=> {
 
       containerStyle={{
         padding: 15,
-        marginTop: 15,
+        marginTop: 40,
         marginBottom: 25,
         borderRadius: 30,
       }}

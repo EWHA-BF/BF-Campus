@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { Image } from '../components';
+import { Image, Button } from '../components';
 import { TouchableOpacity, View, Dimensions, Modal, StyleSheet, Text, Pressable, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { DB, getCurUser } from '../firebase';
@@ -37,11 +37,11 @@ const StyledCompo = styled.View`
   border: 2px solid ${({ theme }) => theme.errorText};
   border-radius: 15px;
   width: ${compoWidth}px;
-  height: 120px;
+  height: 100px;
 `;
 
 const CompoHeader = styled.View`
-  flex: 1.5;
+  flex: 1.8;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: ${({ theme }) => theme.errorText};
@@ -71,11 +71,11 @@ const Home = ({ navigation }) => {
   
       // user의 lastPost 필드 값이 가장 최신 글이면 새 글 x
       if (last.id == userLastPost) {
-        setText('새 글 x');
+        setText('긴급 게시판에 등록된 새 글이 없습니다.');
       }
       // 아니면 새 글 O
       else {
-        setText('새 글');
+        setText('긴급 게시판에 등록된 새 글이 있습니다.');
         // user의 lastPost 필드 업데이트
         const lastPostRef = doc(DB, 'users', `${curUser.uid}`);
         updateDoc(lastPostRef, {
@@ -92,8 +92,6 @@ const Home = ({ navigation }) => {
       });
     });
 
-    console.log('home, mount');
-
     lastPhotoFunc();
 
     return () => unsubscribe();
@@ -101,6 +99,7 @@ const Home = ({ navigation }) => {
 
   return (
     <Container>
+      {/* modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -123,25 +122,67 @@ const Home = ({ navigation }) => {
         </View>
       </Modal>
       <Pressable
-        style={[styles.button, styles.buttonOpen]}
+        style={[styles.button, styles.buttonOpen, styles.buttonCustom]}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.textStyle}>Show Modal</Text>
+        <Ionicons
+              name="megaphone"
+              size={18}
+              color='#E74B3C'
+              style={{marginRight: 10}} />
+        <Text style={[styles.textStyle, styles.textCustom]}>긴급 소식 확인</Text>
       </Pressable>
 
       {/* 지도 */}
       <TouchableOpacity
         onPress={() => navigation.navigate('Map')}
-        activeOpacity={0.8}>
-        {/* 이미지 url 수정 */}
-        <Image
-          url='https://firebasestorage.googleapis.com/v0/b/rn-chat-app-89bdb.appspot.com/o/ios-icon.png?alt=media'
-          containerStyle={{
-            width: (Dimensions.get('window').width) - 20 * 3,
-            height: 220,
-            resizeMode: 'stretch',
-            borderRadius: 15,
-          }} />
+        activeOpacity={0.8}
+        style={{
+          backgroundColor: '#fff',
+          borderRadius: 15,
+          //iOS
+          shadowColor: "#000000", 
+          shadowOpacity: 0.2,
+          shadowRadius: 7,
+          shadowOffset: { width: 2, height: 2 }, 
+          //Android
+          elevation: 5,
+        }}
+        >
+          <Image
+            url='https://i.imgur.com/thtIImL.jpg'
+            containerStyle={{
+              width: (Dimensions.get('window').width) - 20 * 3,
+              height: 220,
+              resizeMode: 'stretch',
+              borderRadius: 15,
+              opacity: 0.6,
+            }} />
+          <TouchableOpacity
+            // 지도 보기 버튼
+            onPress={ ()=>
+              navigation.navigate('Map')
+            }
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: theme.ewha_green,
+              width: 120,
+              padding: 10,
+              marginTop: 0,
+              borderRadius: 7,
+              position: 'absolute',
+              bottom: 15,
+              left: (((Dimensions.get('window').width) - 20 * 3) / 2)-(120/2),
+            }}
+            >
+            <Text style={{
+              fontSize: 13,
+              color: 'white',
+              fontWeight: '600',
+            }}>캠퍼스 지도 보기</Text>
+
+          </TouchableOpacity>
       </TouchableOpacity>
 
       {/*긴급 게시판*/}
@@ -162,7 +203,7 @@ const Home = ({ navigation }) => {
               style={{ flex: 1 }}
               color='white' />
           </CompoHeader>
-          <StyledText style={{ flex: 2, textAlign: 'center', paddingTop: 20, fontSize: 16, color: 'grey', paddingHorizontal: 20, }}>캠퍼스 내 긴급한 소식을 알려 드립니다!</StyledText>
+          <StyledText style={{ flex: 2, textAlign: 'left', paddingTop: 20, fontSize: 14, color: 'grey', paddingHorizontal: 20, }}>캠퍼스 내 긴급한 소식을 알려 드립니다!</StyledText>
         </StyledCompo>
       </TouchableOpacity>
 
@@ -185,7 +226,7 @@ const Home = ({ navigation }) => {
               style={{ flex: 1 }}
               color='white' />
           </CompoHeader>
-          <StyledText style={{ flex: 2, textAlign: 'center', paddingTop: 20, fontSize: 16, color: 'grey', paddingHorizontal: 20, }}>원하는 건물의 정보만 빠르게 확인하세요!</StyledText>
+          <StyledText style={{ flex: 2, textAlign: 'left', paddingTop: 20, fontSize: 14, color: 'grey', paddingHorizontal: 20, }}>원하는 건물의 정보만 빠르게 확인하세요!</StyledText>
         </StyledCompo>
       </TouchableOpacity>
 
@@ -201,11 +242,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22
   },
+  // modal 창
   modalView: {
     margin: 20,
     backgroundColor: "white",
+    width: 300,
     borderRadius: 20,
-    padding: 35,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -216,24 +260,57 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5
   },
+  //전체 버튼
   button: {
     borderRadius: 20,
-    padding: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     elevation: 2
   },
+  // showModal 버튼
   buttonOpen: {
-    backgroundColor: "#F194FF",
+    backgroundColor: "#fff",
+    borderWidth: 2,
+    borderColor : '#E74B3C',
+    shadowColor: '#E74B3C',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5
   },
+  // 확인 버튼
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#E74B3C",
   },
+  // showModal 버튼 
+  buttonCustom: {
+    borderRadius: 10,
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    elevation: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  // 전체 텍스트
   textStyle: {
     color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
+    fontWeight: "600",
+    textAlign: "center",
   },
+  //showModal 버튼 텍스트
+  textCustom : {
+    color: '#E74B3C',
+    fontWeight: "bold",
+    fontSize: 16, 
+  },
+  // modal 화면 텍스트
   modalText: {
-    marginBottom: 15,
+    marginBottom: 20,
+    fontSize: 16,
+    fontWeight: '600',
     textAlign: "center"
   }
 });

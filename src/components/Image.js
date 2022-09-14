@@ -6,7 +6,7 @@ const Container = styled.View`
 `;
 
 const BasicImg= styled.Image`
-  background-color: ${ ({theme}) => theme.imgBgColor};
+  background-color: ${ ({theme}) => theme.bgColor};
 `;
 
 

@@ -3,10 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Auth from './Auth';
 import Main from './Main';
 import {UserContext, ProgressContext} from '../contexts';
-
 import {Spinner} from '../components';
-
-import {Post, MainBoard} from '../screens';
 
 
 

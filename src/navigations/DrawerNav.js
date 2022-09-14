@@ -2,6 +2,8 @@ import React, {useContext} from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {MainBoard, Home, Map, EmergencyBoard, Profile, Settings, BoardsList, MyPosts, MyBoards} from '../screens'; 
 import styled, { ThemeContext } from 'styled-components';
+import { Ionicons } from '@expo/vector-icons';
+import { Image, Button } from '../components';
 
 const Drawer = createDrawerNavigator();
 
@@ -40,7 +42,18 @@ export default function DrawerNav() {
       component={Home} 
       options={{
         drawerLabel: '홈',
-        title: 'BFCampus',
+        headerTitle:()=> {
+          return (
+            <Image
+            url='https://i.imgur.com/qcXJOHK.png'
+            containerStyle={{
+              width: 200,
+              height: 30,
+              resizeMode: 'cover',
+              // borderRadius: 15,
+            }} />
+          )
+        }
       }}/>
       <Drawer.Screen 
       name='Map' 
