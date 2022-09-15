@@ -73,6 +73,7 @@ const Footer = styled.View`
 // navigation, 
 const Post = ({navigation,route})=> {
   const theme=useContext(ThemeContext);
+  
 
   //header
   useLayoutEffect(()=>{
