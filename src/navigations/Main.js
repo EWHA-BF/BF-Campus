@@ -7,7 +7,7 @@ import { TouchableOpacity, View, Alert, Dimensions, Text} from 'react-native';
 
 // import {Home} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
-import {Map, MyBoards, EmergencyBoard, EngBoard, PostCreation, Post} from '../screens';
+import {Map, MyBoards, EmergencyBoard, EngBoard, PostCreation, Post, BuildingGongHak} from '../screens';
 import Navigation from '.';
 
 
@@ -86,6 +86,31 @@ const Main = ()=> {
       headerBackTitleVisible: false,
     }}
     /> 
+    <Stack.Screen 
+    name='BuildingGongHak' 
+    component={BuildingGongHak}
+    options={{
+      headerShown: true,
+      headerBackTitleVisible: false,
+      headerTitle : '공학관 정보',
+      headerTitleStyle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      headerTintColor: theme.ewha_green,
+      headerTitleAlign: 'center',
+      headerLeft: ({onPress}) => {
+        return (
+          <Ionicons 
+          name="chevron-back-outline" 
+          size={30}
+          style={{marginLeft:5,}}
+          onPress={onPress}
+          color={theme.ewha_green}/> 
+        );
+      },
+    }}
+    />  
   </Stack.Navigator>
   );
 } 

@@ -17,8 +17,8 @@ import PostCreation from './PostCreation';
 import Post from './Post';
 import MyPosts from './MyPosts';
 import MyBoards from './MyBoards';
+import BuildingGongHak from './BuildingGongHak';
 
 
 
-
-export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardsList, EmergencyBoard, Profile, Settings, EngBoard, PoscoBoard, EccBoard, PostCreation, Post, MyPosts, MyBoards};
+export {Login, Home, Signup, Walkthrough, Verify, FindPw, MainBoard, Map, BoardsList, EmergencyBoard, Profile, Settings, EngBoard, PoscoBoard, EccBoard, PostCreation, Post, MyPosts, MyBoards, BuildingGongHak};
