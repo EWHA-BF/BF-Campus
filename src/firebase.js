@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import config from '../firebase.json';
 import { getAuth } from "firebase/auth";
+import { getStorage, ref } from "firebase/storage";
 import { getFirestore, collection, addDoc, setDoc, doc,updateDoc  } from "firebase/firestore";
 
 const app = initializeApp(config);
@@ -8,6 +9,9 @@ export const auth = getAuth(app);
 
 //DB 가져오기
 export const DB = getFirestore(app);
+
+//storage 가져오기
+export const storage = getStorage(app);
 
 
 //현재 사용자 정보 가져오기

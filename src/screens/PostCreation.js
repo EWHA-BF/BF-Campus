@@ -12,6 +12,9 @@ import {createPost, getCurUser} from '../firebase';
 import * as ImagePicker from 'expo-image-picker';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {storage, DB} from "../firebase";
+import { getFirestore, collection, addDoc, setDoc, doc,updateDoc  } from "firebase/firestore";
 
 
 const Container = styled.View`
@@ -111,6 +114,8 @@ const PostCreation = ({route})=> {
   const {spinner} = useContext(ProgressContext);
 
 
+
+
   //
   const navigation = useNavigation(); 
 
@@ -161,6 +166,10 @@ const PostCreation = ({route})=> {
     // }
   };
 
+    
+    
+
+
 
   //완료 버튼 클릭 함수
   // 여기가 문제
@@ -186,31 +195,81 @@ const PostCreation = ({route})=> {
         userName: curUser.displayName,
       });
 
-      // navigation.replace('Post', {
-      //   postId, 
-      //   title, 
-      //   description: desc, 
-      //   image, 
-      //   nickname: curUser.displayName, 
-      //   isEmer
+      const uri=image;
+    
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+
+      const storageRef = ref(storage, `post/${id}/photo.jpg`);
+
+      
+      uploadBytes(storageRef, blob).then((snapshot) => {
+        console.log('uploaded');
+        // storage에서 img 값 불러오기
+        getDownloadURL(storageRef)
+        .then((url) => {
+          console.log(url);
+          // setImage(url);
+          // console.log(image);
+          //image 값 업데이트
+          const curDocRef = doc(DB, "boards", `${route.params.boardId}/posts/${id}`);
+          updateDoc(curDocRef, {
+            image: url,
+          });
+          // console.log(image);
+          navigation.replace('Post', {
+            id, 
+            title, 
+            description: desc, 
+            image, 
+            userName: curUser.displayName, 
+            isEmer,
+            uid: curUser.uid,
+          });
+        })  
+        .catch((error) => {
+          console.log(error.message);
+        });
+      });
+
+    
+      
+      // const imgURL = getDownloadURL(storageRef);
+      console.log('here');
+      // console.log(imgURL);
+      // console.log('here');
+      // setImage(imgURL);
+      // .then((url) => {
+      //   console.log(url);
+      //   setImage(url);
+      //   // // `url` is the download URL for 'images/stars.jpg'
+
+      //   // // This can be downloaded directly:
+      //   // const xhr = new XMLHttpRequest();
+      //   // xhr.responseType = 'blob';
+      //   // xhr.onload = (event) => {
+      //   //   const blob = xhr.response;
+      //   // };
+      //   // xhr.open('GET', url);
+      //   // xhr.send();
+      // })
+      // .catch((error) => {
+      //   // console.log(error.message);
       // });
 
-      // 오류수정중
-      // console.log('fir good'); //출력 됨
-      // console.log(route.params.boardId , title , desc , isEmer ,image ,curUser.uid ,curUser.displayName);
+      console.log('ok!');
 
-      // if(route.params.boardId && title && desc &&curUser.uid &&curUser.displayName){
-      // // 화면 이동하면서 필요한 내용 전달
-      // // 여기가 문제
-        navigation.replace('Post', {
-          id, 
-          title, 
-          description: desc, 
-          image, 
-          userName: curUser.displayName, 
-          isEmer,
-          uid: curUser.uid,
-        });
+      
+
+      console.log('ok!!');
+
+
+        
+
+
+
+
 
       // console.log('sec good'); //출력 됨
     }
@@ -231,6 +290,23 @@ const PostCreation = ({route})=> {
   useEffect(()=> {
     setDisabled(!(title && desc&& !errMsg));
   }, [title, desc, errMsg])
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert(
+            'Photo Permission',
+            'Please turn on the camera permission.'
+          );
+          navigation.goBack();
+        }
+      }
+    })();
+  }, []);
 
 
   //header
