@@ -23,10 +23,10 @@ const App = () => {
         <StatusBar 
         backgroundColor={theme.bgColor}
         barStyle="dark-content"/>
+
         {/* 네비게이션 */}
         <Navigation />  
        
-        
       </UserProvider>
 
       </ProgressProvider> 

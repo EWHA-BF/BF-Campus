@@ -3,7 +3,7 @@ import { ThemeContext } from 'styled-components';
 import {createStackNavigator} from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
-import {Signup, Login, Home, Verify, FindPw} from '../screens'; 
+import {Signup, Login, Home, FindPw} from '../screens'; 
 import DrawerNav from './DrawerNav'; 
 
 const Stack = createStackNavigator();
@@ -51,12 +51,6 @@ const Auth = ()=> {
     component={Signup}
     options={{
       headerTitle: '회원가입',
-    }}/>
-    <Stack.Screen 
-    name="Verify" 
-    component={Verify}
-    options={{
-      headerTitle: '이메일 인증',
     }}/>
     <Stack.Screen 
     name="FindPw" 

@@ -53,31 +53,6 @@ const StyledImg= styled.Image`
   margin-bottom: 100px;
 `;
 
-
-// 사진 버튼
-// const ImgBtnContainer=styled.TouchableOpacity`
-//   background-color: ${({ theme }) => theme.text};
-//   position: absolute;
-//   bottom: 5;
-//   left: 25px;  
-//   width: 80px;
-//   height: 50px;
-//   border-radius: 10px;
-//   justify-content: center;
-//   align-items: center;
-// `;
-// const ImgBtn = ({ onPress }) => {
-//   return (
-//     <ImgBtnContainer onPress={onPress}>
-//       <Ionicons
-//       name="camera" 
-//       size={30}
-//       />
-//     </ImgBtnContainer>
-//   );
-// };
-
-
 const Footer = styled.View`
   flex-direction: row;
   justify-content: flex-end;
@@ -88,19 +63,9 @@ const Footer = styled.View`
 `;
 
 
-// 사진 컴포넌트
-// const Image = ({url, onPress})=>{
-//   <>
-//     <StyledImg source={{ uri: url }} />
-//     <ImgBtn onPress={onPress} />
-//   </>
-// }
 
-
-// navigation, 
 const PostCreation = ({route})=> {
   const theme=useContext(ThemeContext);
-  // console.log(route.params.boardId); //boardId 잘 받아 옴
 
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
@@ -114,9 +79,6 @@ const PostCreation = ({route})=> {
   const {spinner} = useContext(ProgressContext);
 
 
-
-
-  //
   const navigation = useNavigation(); 
 
 
@@ -150,29 +112,9 @@ const PostCreation = ({route})=> {
     }
   };
 
-  // 사진 변경 함수
-  const _handlePhotoChange = async url => {
-    // try {
-    //   spinner.start();
-
-    //   const photoURL = await updateUserInfo(url);
-    //   setImage(photoURL);
-    // } 
-    // catch (e) {
-    //   Alert.alert('사진 변경 실패', e.message);
-    // } 
-    // finally {
-    //   spinner.stop();
-    // }
-  };
-
-    
-    
-
 
 
   //완료 버튼 클릭 함수
-  // 여기가 문제
   const _handlePostBtnPress = async () => {
     try{
 
@@ -181,9 +123,7 @@ const PostCreation = ({route})=> {
 
       //user 받기
       const curUser=getCurUser();
-      //curUser.uid
 
-    
       // 함수 호출하여 db에 올리고 post id 받기
       const id = await createPost({
         boardId: route.params.boardId, 
@@ -197,27 +137,21 @@ const PostCreation = ({route})=> {
 
       const uri=image;
     
+      // 이미지 storage 처리
       const response = await fetch(uri);
       const blob = await response.blob();
 
-
       const storageRef = ref(storage, `post/${id}/photo.jpg`);
 
-      
       uploadBytes(storageRef, blob).then((snapshot) => {
-        console.log('uploaded');
+        
         // storage에서 img 값 불러오기
         getDownloadURL(storageRef)
         .then((url) => {
-          console.log(url);
-          // setImage(url);
-          // console.log(image);
-          //image 값 업데이트
           const curDocRef = doc(DB, "boards", `${route.params.boardId}/posts/${id}`);
           updateDoc(curDocRef, {
             image: url,
           });
-          // console.log(image);
           navigation.replace('Post', {
             id, 
             title, 
@@ -232,46 +166,6 @@ const PostCreation = ({route})=> {
           console.log(error.message);
         });
       });
-
-    
-      
-      // const imgURL = getDownloadURL(storageRef);
-      console.log('here');
-      // console.log(imgURL);
-      // console.log('here');
-      // setImage(imgURL);
-      // .then((url) => {
-      //   console.log(url);
-      //   setImage(url);
-      //   // // `url` is the download URL for 'images/stars.jpg'
-
-      //   // // This can be downloaded directly:
-      //   // const xhr = new XMLHttpRequest();
-      //   // xhr.responseType = 'blob';
-      //   // xhr.onload = (event) => {
-      //   //   const blob = xhr.response;
-      //   // };
-      //   // xhr.open('GET', url);
-      //   // xhr.send();
-      // })
-      // .catch((error) => {
-      //   // console.log(error.message);
-      // });
-
-      console.log('ok!');
-
-      
-
-      console.log('ok!!');
-
-
-        
-
-
-
-
-
-      // console.log('sec good'); //출력 됨
     }
 
     // 로그인 실패
@@ -288,8 +182,8 @@ const PostCreation = ({route})=> {
 
   //버튼 활성화 여부 업데이트
   useEffect(()=> {
-    setDisabled(!(title && desc&& !errMsg));
-  }, [title, desc, errMsg])
+    setDisabled(!(title && desc&& !errMsg && image));
+  }, [title, desc, errMsg, image])
 
   useEffect(() => {
     (async () => {
@@ -417,21 +311,7 @@ const PostCreation = ({route})=> {
         </View>
       </Footer>
 
-      {/* 사진 */}
-      {/*<View style={{
-        backgroundColor: 'black',
-        width:250,
-        height: 250,
-        margin: 20,
-      }}>
-        <Image 
-          url={image} 
-          onChangePhoto={_handlePhotoChange} 
-          onPress={_handlePhotoBtnPress}
-        />
-      </View> */}
-
-
+      {/* 이미지 */}
       <StyledImg source={{ uri: image }} /> 
 
       <TouchableOpacity
@@ -464,12 +344,5 @@ const PostCreation = ({route})=> {
     </ScrollView>
   );
 } 
-
-
-// Image.propTypes={
-//   url:PropTypes.string,
-//   onChangePhoto: PropTypes.func,
-// }
-
 
 export default PostCreation;

@@ -1,5 +1,3 @@
-// '설명서 보기' 버튼 만들기
-
 import React, {useContext, useState, useRef, useEffect} from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import {Button, ErrorMsg, Input, Image} from '../components';
@@ -16,7 +14,6 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged
 } from 'firebase/auth';
-
 
 
 //logo img url
@@ -58,19 +55,6 @@ const Login = ({navigation})=> {
   const [disabled, setDisabled] = useState(true);
 
 
-  //!!콜백 오류 발생!!
-  //로그인 상태 변경 감지
-  // onAuthStateChanged(auth, (currentUser)=> {
-  //   if (currentUser) {
-  //     setUser(currentUser);
-  //   } 
-  //   else {
-  //     setUser({});
-  //   }
-  // })
-
-
-
   //로그인 버튼 활성화 설정
   useEffect(() => {
     setDisabled(!(email && pw && !errorMsg));
@@ -79,9 +63,8 @@ const Login = ({navigation})=> {
 
   //이메일 입력 
   const _handleEmailChange = email => {
-    //공백 제거
+    //공백 없애고 업데이트
     const changedEmail=removeWhitespace(email);
-    //업데이트
     setEmail(changedEmail);
     //유효성 검사 후 에러 메시지 변경
     setErrorMsg(validateEmail(changedEmail) ? '' : '올바른 이메일을 입력해주세요');
@@ -89,7 +72,7 @@ const Login = ({navigation})=> {
 
   //패스워드 입력
   const _handlePwChange = pw => {
-    //공백 제거 후 업데이트
+    //공백 없애고 업데이트
     setPw(removeWhitespace(pw));
     setErrorMsg(pw ? '' : '비밀번호를 입력해주세요');
   }
@@ -99,11 +82,10 @@ const Login = ({navigation})=> {
     
     // 로그인 성공
     try{
-
       //spinner 실행
       spinner.start();
 
-      //Signin
+      //Signin 함수
       const userInfo = await signInWithEmailAndPassword(auth, email, pw);
       
       //user 업데이트
@@ -212,7 +194,6 @@ const Login = ({navigation})=> {
     </KeyboardAwareScrollView>
   );
 } 
-
 
 
 export default Login;

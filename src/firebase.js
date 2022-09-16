@@ -14,14 +14,11 @@ export const DB = getFirestore(app);
 export const storage = getStorage(app);
 
 
-//현재 사용자 정보 가져오기
+//현재 사용자 정보 가져오는 함수
 export const getCurUser = () => {
   const {uid, displayName, email} = auth.currentUser;
   return {uid, displayName, email};
 }
-
-
-
 
 
 //글 쓰기 함수
@@ -50,20 +47,6 @@ export const createPost = async({boardId, title, desc, isEmer, image, uid, userN
     });
 
     return docRef.id;
-    
-
-     // id를 uid로 지정해서 올리는 방법
-    // ** id 지정해서 올리기 
-    // await setDoc(doc(DB, "boards", `${boardId}/posts/${uid}`), {
-    //   id: uid,
-    //   title: title,
-    //   description: desc,
-    //   createdAt: Date.now(),
-    //   isEmer: isEmer, 
-    //   image: image, 
-    //   userName: userName
-    // });
-    // uid 반환
   } 
   catch (e) {
     console.error(e.message);

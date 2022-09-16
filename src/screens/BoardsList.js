@@ -32,7 +32,6 @@ const ItemTitle =styled.Text`
 
 
 //item 컴포넌트
-// noti 
 const Item= React.memo( 
   ({item: {id, title, starUsers}, onPress}) => {
   const theme=useContext(ThemeContext);
@@ -114,7 +113,6 @@ const BoardsList = ({navigation})=> {
   // 마운트 될 때 동작
   // board collection 모든 문서 불러오기 
   useEffect(()=>{
-      // !!!
     const q = query(collection(DB, "boards"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const list = [];
@@ -137,7 +135,7 @@ const BoardsList = ({navigation})=> {
         <Item 
         item={item} 
         onPress={params=>{
-          navigation.navigate('EngBoard', params);
+          navigation.navigate('Board', params);
         }}
         />
       }

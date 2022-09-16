@@ -103,7 +103,7 @@ const MyBoards = ({navigation})=> {
         <Item 
         item={item} 
         onPress={params=>{
-          navigation.navigate('EngBoard', params);
+          navigation.navigate('Board', params);
         }}
         />
       }

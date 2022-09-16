@@ -10,8 +10,6 @@ const Container = styled.View`
   align-items: center;
   border-radius: 5px;
   background-color: ${ ({theme}) => theme.btnBgColor};
-  /* opacity: ${ ({disabled}) => disabled? 0.5 : 1};   */
-  /* background-color: ${ ({theme, disabled}) => disabled? theme.btnDisabled : theme.btnBgColor}; */
 `;
 
 //버튼 타이틀 기본 값

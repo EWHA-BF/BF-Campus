@@ -38,11 +38,10 @@ const FindPw = ({navigation})=> {
 
   //이메일 입력 
   const _handleEmailChange = email => {
-    //공백 제거
+    //공백 없애고 업데이트
     const changedEmail=removeWhitespace(email);
-    //업데이트
     setEmail(changedEmail);
-    //유효성 검사 후 에러 메시지 변경
+    //유효성 검사 - 에러 메시지 변경
     setErrorMsg(validateEmail(changedEmail) ? '' : '올바른 이메일을 입력해주세요');
   }
 
@@ -77,7 +76,6 @@ const FindPw = ({navigation})=> {
         case 'auth/invalid-email':
           Alert.alert('올바른 이메일을 입력해주세요');
           break;
-        // 존재하지 않는 계정 -에러 안 잡힘 (메일 전송은x) --> 수정하기!!
         case 'auth/user-not-found':
           Alert.alert('존재하지 않는 계정입니다');
           break;
@@ -119,20 +117,6 @@ const FindPw = ({navigation})=> {
         fontWeight: '600',
       }}
       />
-      {/* <Button 
-      title="인증 메일이 오지 않나요?" 
-      onPress={()=> {}}
-      containerStyle={{
-        marginTop: 10,
-        backgroundColor: 'transparent', 
-      }}
-      textStyle={{
-        color: theme.btnDisabled,
-        fontSize: 15,
-        fontWeight: '500',
-        textDecorationLine:'underline',
-      }}
-      /> */}
     </Container>
   );
 } 

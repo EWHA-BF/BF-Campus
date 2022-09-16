@@ -37,12 +37,7 @@ const ItemTitle =styled.Text`
   font-size: 18px;
   font-weight: 600;
 `;
-// 내용
-const ItemDesc =styled.Text`
-  font-size: 15px;
-  margin-top: 13px;
-  color: 'black';
-`;
+
 // 시간
 const ItemTime = styled.Text`
   font-size: 14px;
@@ -66,7 +61,6 @@ const Item= React.memo(
     <ItemContainer onPress={()=> onPress({title, description, userName, createdAt, uid, image, isEmer, id})}>
       <ItemTextContainer>
         <ItemTitle>{title}</ItemTitle>
-        <ItemDesc>{description}</ItemDesc>
       </ItemTextContainer>
       <ItemTime>{TimeStamp(createdAt)}</ItemTime>
       <ItemIcon />
@@ -77,7 +71,7 @@ const Item= React.memo(
 
 
 
-const EngBoard = ({navigation, route})=> {
+const Board = ({navigation, route})=> {
   const theme=useContext(ThemeContext);
 
   //항목 목록 배열 상태 변수
@@ -163,4 +157,4 @@ const EngBoard = ({navigation, route})=> {
   );
 } 
 
-export default EngBoard;
+export default Board;
