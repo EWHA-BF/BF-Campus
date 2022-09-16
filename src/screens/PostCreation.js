@@ -144,7 +144,7 @@ const PostCreation = ({route})=> {
       const storageRef = ref(storage, `post/${id}/photo.jpg`);
 
       uploadBytes(storageRef, blob).then((snapshot) => {
-        console.log('uploaded');
+        
         // storage에서 img 값 불러오기
         getDownloadURL(storageRef)
         .then((url) => {
@@ -182,8 +182,8 @@ const PostCreation = ({route})=> {
 
   //버튼 활성화 여부 업데이트
   useEffect(()=> {
-    setDisabled(!(title && desc&& !errMsg));
-  }, [title, desc, errMsg])
+    setDisabled(!(title && desc&& !errMsg && image));
+  }, [title, desc, errMsg, image])
 
   useEffect(() => {
     (async () => {

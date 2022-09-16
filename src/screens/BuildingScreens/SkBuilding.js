@@ -37,8 +37,8 @@ const SkBuilding = ({ navigation }) => {
     <Container>
       <StyledTitle>SK관</StyledTitle>
       <StyledText>
-        {/* 출입문: 지하 1층, 1층, 2층
-        {"\n"}Ev있음. 휠체어 경사로 있음. */}
+        출입문: 지하 1층, 1층
+        {"\n"}엘리베이터, 경사로 이용 가능
       </StyledText>
       <Button
         title="게시판으로 이동"

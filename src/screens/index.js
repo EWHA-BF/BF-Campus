@@ -1,18 +1,13 @@
 import Login from "./Login";
 import Home from "./Home";
 import Signup from "./Signup";
-import Walkthrough from "./Walkthrough";
-import Verify from "./Verify";
 import FindPw from "./FindPw";
 import MainBoard from "./MainBoard";
 import Map from "./Map";
 import BoardsList from "./BoardsList";
 import EmergencyBoard from "./EmergencyBoard";
 import Profile from "./Profile";
-import Settings from "./Settings";
 import Board from "./Board";
-import PoscoBoard from "./PoscoBoard";
-import EccBoard from "./EccBoard";
 import PostCreation from "./PostCreation";
 import Post from "./Post";
 import MyPosts from "./MyPosts";
@@ -38,18 +33,13 @@ export {
   Login,
   Home,
   Signup,
-  Walkthrough,
-  Verify,
   FindPw,
   MainBoard,
   Map,
   BoardsList,
   EmergencyBoard,
   Profile,
-  Settings,
   Board,
-  PoscoBoard,
-  EccBoard,
   PostCreation,
   Post,
   MyPosts,
