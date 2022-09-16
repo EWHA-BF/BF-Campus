@@ -98,7 +98,7 @@ const Signup = ({navigation})=>{
       //spinner 실행
       spinner.start();
   
-      //Signup
+      //Signup 함수
       const newUser = await createUserWithEmailAndPassword(auth, email, pw);
       
       //nickname 저장
@@ -119,21 +119,6 @@ const Signup = ({navigation})=>{
       setPw('');
       setPwCheck('');
       setNickName('');
-
-      
-      //이메일 인증
-      // Alert.alert(
-      //   "아직 인증되지 않은 사용자입니다",
-      //   "이메일 인증 화면으로 이동하시겠습니까?",
-      //   [
-      //     {
-      //       text: "나중에",
-      //       onPress: () => navigation.navigate('Login'),
-      //       style: "cancel"
-      //     },
-      //     { text: "이동", onPress: () => navigation.navigate('Verify') }
-      //   ],
-      // );
     }
 
     // 회원가입 실패

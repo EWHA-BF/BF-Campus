@@ -38,20 +38,10 @@ const Profile = ({navigation, route})=> {
     <Container>
       <StyledText>닉네임  |   {curUser.displayName}</StyledText>
       <StyledText>이메일  |   {curUser.email}</StyledText>
-      {/* <Input 
-      label='name' 
-      value={curUser.displayName}
-      disabled
-      />
-      <Input 
-      label='email' 
-      value={curUser.email}
-      disabled
-      /> */}
       <Button 
       title="로그아웃" 
 
-      // 로그아웃 및 user 업데이트
+      // 로그아웃하고 user 업데이트
       onPress={ async () => {
         try{
           await signout();

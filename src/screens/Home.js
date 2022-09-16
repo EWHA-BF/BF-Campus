@@ -16,15 +16,6 @@ const Container = styled.SafeAreaView`
   justify-content: space-evenly;
 `;
 
-//row container
-const Row = styled.View`
-  flex-direction: row;
-  width: 95%;
-  height: 30%;
-  align-items: center;
-  justify-content: space-evenly;
-`;
-
 const StyledText = styled.Text`
   font-size: 24px;
   color: ${({ theme }) => theme.text};
@@ -59,8 +50,7 @@ const Home = ({ navigation }) => {
   // 긴급 게시판에 올라온 가장 최신 글
   let last;
   
-
-  // 마운트될 때 동작 - 앱 시작하고 화면 나타날 때 초기 한 번만!
+  // 마운트될 때 동작 
   useEffect(() => {
 
     //user 문서 읽어오기 - lastPost 필드의 값 저장
@@ -97,6 +87,7 @@ const Home = ({ navigation }) => {
     return () => unsubscribe();
   }, []);
 
+
   return (
     <Container>
       {/* modal */}
@@ -125,15 +116,15 @@ const Home = ({ navigation }) => {
         style={[styles.button, styles.buttonOpen, styles.buttonCustom]}
         onPress={() => setModalVisible(true)}
       >
-        <Ionicons
-              name="megaphone"
-              size={18}
-              color='#E74B3C'
-              style={{marginRight: 10}} />
-        <Text style={[styles.textStyle, styles.textCustom]}>긴급 소식 확인</Text>
+      <Ionicons
+            name="megaphone"
+            size={18}
+            color='#E74B3C'
+            style={{marginRight: 10}} />
+      <Text style={[styles.textStyle, styles.textCustom]}>긴급 소식 확인</Text>
       </Pressable>
 
-      {/* 지도 */}
+      {/* 지도 버튼 */}
       <TouchableOpacity
         onPress={() => navigation.navigate('Map')}
         activeOpacity={0.8}
@@ -149,39 +140,38 @@ const Home = ({ navigation }) => {
           elevation: 5,
         }}
         >
-          <Image
-            url='https://i.imgur.com/thtIImL.jpg'
-            containerStyle={{
-              width: (Dimensions.get('window').width) - 20 * 3,
-              height: 220,
-              resizeMode: 'stretch',
-              borderRadius: 15,
-              opacity: 0.6,
-            }} />
-          <TouchableOpacity
-            // 지도 보기 버튼
-            onPress={ ()=>
-              navigation.navigate('Map')
-            }
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: theme.ewha_green,
-              width: 120,
-              padding: 10,
-              marginTop: 0,
-              borderRadius: 7,
-              position: 'absolute',
-              bottom: 15,
-              left: (((Dimensions.get('window').width) - 20 * 3) / 2)-(120/2),
-            }}
-            >
-            <Text style={{
-              fontSize: 13,
-              color: 'white',
-              fontWeight: '600',
-            }}>캠퍼스 지도 보기</Text>
-
+        <Image
+          url='https://i.imgur.com/thtIImL.jpg'
+          containerStyle={{
+            width: (Dimensions.get('window').width) - 20 * 3,
+            height: 220,
+            resizeMode: 'stretch',
+            borderRadius: 15,
+            opacity: 0.6,
+          }} />
+        <TouchableOpacity
+          // 지도 보기 버튼
+          onPress={ ()=>
+            navigation.navigate('Map')
+          }
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: theme.ewha_green,
+            width: 120,
+            padding: 10,
+            marginTop: 0,
+            borderRadius: 7,
+            position: 'absolute',
+            bottom: 15,
+            left: (((Dimensions.get('window').width) - 20 * 3) / 2)-(120/2),
+          }}
+          >
+          <Text style={{
+            fontSize: 13,
+            color: 'white',
+            fontWeight: '600',
+          }}>캠퍼스 지도 보기</Text>
           </TouchableOpacity>
       </TouchableOpacity>
 

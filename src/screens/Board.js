@@ -77,7 +77,7 @@ const Item= React.memo(
 
 
 
-const EngBoard = ({navigation, route})=> {
+const Board = ({navigation, route})=> {
   const theme=useContext(ThemeContext);
 
   //항목 목록 배열 상태 변수
@@ -163,4 +163,4 @@ const EngBoard = ({navigation, route})=> {
   );
 } 
 
-export default EngBoard;
+export default Board;

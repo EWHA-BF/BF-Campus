@@ -109,13 +109,6 @@ export default function DrawerNav() {
         title: '내가 쓴 글',
         drawerLabelStyle: {fontSize: 17, marginLeft: 10},
       }}/>
-      {/* <Drawer.Screen 
-      name='Settings' 
-      component={Settings} 
-      options={{
-        drawerLabel: '설정',
-        title: '설정'
-      }}/> */}
     </Drawer.Navigator>
   );
 }

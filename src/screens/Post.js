@@ -25,8 +25,6 @@ const StyledText = styled.Text`
   font-size: 18px;
   background-color: ${ ({theme}) => theme.bgColor};
   color: ${ ({theme}) => theme.dark_grey};
-  /* font-weight: bold; */
-  /* padding: 20px; */
 `;
 
 const StyledInput = styled.TextInput`
@@ -69,12 +67,9 @@ const Footer = styled.View`
 `;
 
 
-
-// navigation, 
 const Post = ({navigation,route})=> {
   const theme=useContext(ThemeContext);
   
-
   //header
   useLayoutEffect(()=>{
     navigation.setOptions({
@@ -90,31 +85,10 @@ const Post = ({navigation,route})=> {
           color={theme.ewha_green}/> 
         );
       },
-      headerRight: ()=> {
-        // 수정 버튼 -해당 uid의 user만 보이게
-        // return (
-        //   <TouchableOpacity 
-        //   onPress={()=> {}}
-        //   style={{
-        //     borderRadius: 20,
-        //     paddingHorizontal: 12,
-        //     paddingVertical: 8,
-        //     backgroundColor: theme.bgColor,
-        //     marginRight: 10,
-        //   }}
-        //   >
-        //   <Text
-        //   style={{
-        //     fontSize: 17,
-        //     color: theme.ewha_green,
-        //   }}
-        //   >수정</Text>
-        //   </TouchableOpacity>
-        // );
-      }
     })
   })
 
+  //user 불러오기
   const curUser=getCurUser();
 
   // 삭제 버튼 함수
@@ -143,11 +117,8 @@ const Post = ({navigation,route})=> {
   return (
 
     <ScrollView>
-    {/* <KeyboardAwareScrollView 
-    contentContainerStyle={{flex: 1}}
-    extraScrollHeight={20}> */}
     <Container>
-
+      {/* 헤더 */}
       <HeaderText>
         <StyledText>작성자: {route.params.userName}</StyledText>
         <StyledText style={{
@@ -202,9 +173,8 @@ const Post = ({navigation,route})=> {
         </View>
       </Footer>
 
-      
+      {/* 이미지 */}
       <StyledImg source={{ uri: route.params.image }} /> 
-
 
       { 
       ((route.params.uid) == (curUser.uid)) &&

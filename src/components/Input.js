@@ -1,4 +1,3 @@
-// Input 안에 icon 넣기
 import React, { useState, forwardRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -9,14 +8,6 @@ const Container = styled.View`
   width: 100%;
   margin: 10px 0;
 `;
-
-// // Input 위 텍스트
-// const Label = styled.Text`
-//   font-size: 18px;
-//   font-weight: 600;
-//   margin-bottom: 8px;
-//   color: ${ ({theme}) => theme.inputLabel};
-// `;
 
 
 // Input 입력창
@@ -39,7 +30,6 @@ const Input = forwardRef(
 
     return (
       <Container>
-        {/* <Label isFocused={isFocused}>{props.label}</Label> */}
         <StyledInput
           ref={ref}
           value={props.value}
